@@ -9,10 +9,25 @@ export default function GrocerySearchScreen(props) {
 
   const items = [
     {
-      imageUrl: '',
       title: 'Bananas',
       rating: 4,
+      price: 0.99,
+      imageUrl: 'https://react-native-elements.github.io/react-native-elements/docs/rating.html'
+    },
+    {
+      title: 'Apples',
+      rating: 4,
       price: 0.99
+    },
+    {
+      title: 'Toilet Paper',
+      rating: 3,
+      price: 9.99
+    },
+    {
+      title: 'Hand Sanitizer',
+      rating: 4,
+      price: 12.99
     }
   ];
 
@@ -31,12 +46,12 @@ export default function GrocerySearchScreen(props) {
       />
       <View style={styles.groceryItemsContainer}>
         {
-          items.map((item) => {
+          items.map((item, index) => {
             return <GroceryItemListing
+              key={index}
               title={item.title}
               rating={item.rating}
               price={item.price}
-              imageUrl={item.imageUrl}
             />
           })
         }
