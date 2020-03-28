@@ -1,12 +1,37 @@
 import React from "react";
-import {View, Dimensions, StyleSheet} from 'react-native';
+import {View, Dimensions, StyleSheet, FlatList} from 'react-native';
 import MapView from 'react-native-maps';
-import StoreMarker from '../components/StoreMarker.js';
 
-const test = {
-  latitude: 43.800680,
-  longitude: -79.336230,
-}
+const storeLocations = [
+  {
+    name: "Walmart - Toronto",
+    coords: {
+      latitude: 43.800680,
+      longitude: -79.336230,
+    }
+  },
+  {
+    name: "Walmart - Mississauga",
+    coords: {
+      latitude: 43.200680,
+      longitude: -79.436230,
+    }
+  },
+  {
+    name: "Walmart - Markham",
+    coords: {
+      latitude: 43.850080,
+      longitude: -73.336230,
+    }
+  },
+  {
+    name: "Walmart - Brampton",
+    coords: {
+      latitude: 43.8040680,
+      longitude: -72.336230,
+    }
+  },
+]
 
 export default function StoreSelectionScreen() {
   return (
@@ -20,7 +45,15 @@ export default function StoreSelectionScreen() {
         longitudeDelta: 0.0421,
       }}
     >
-      <MapView.Marker coordinate={test}/>
+      {storeLocations.map(store => {
+        console.log(store.coords);
+        return (
+          <MapView.Marker
+            key={store.name}
+            coordinate={store.coords}
+          />
+        )
+      })}
     </MapView>
   </View>
   );
