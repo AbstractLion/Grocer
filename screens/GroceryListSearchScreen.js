@@ -20,6 +20,19 @@ function GroceryListSearchScreen() {
           price: 20.04
         }
       ],
+    },
+    {
+      id: 1,
+      author: 'Leon',
+      createdAt: Date.now(),
+      items: [
+        {
+          id: 37,
+          title: "Lion Meat",
+          rating: 1,
+          price: 20.04
+        }
+      ],
     }
   ];
 

@@ -1,16 +1,31 @@
 import React, {useContext} from "react";
 import {createStackNavigator} from "@react-navigation/stack";
 import {Icon} from "react-native-elements";
-import {DrawerActions} from '@react-navigation/native';
+import {useNavigation, DrawerActions} from '@react-navigation/native';
 import LocationContext from "../contexts/Location";
 import StoreSelectionScreen from "../screens/StoreSelectionScreen";
 
 const Stack = createStackNavigator();
 
+function ExitIcon() {
+  const navigation = useNavigation();
+
+  return <Icon
+    name="x"
+    type="feather"
+    size={30}
+    containerStyle={{marginLeft: 15}}
+    onPress={() => {
+      navigation.pop();
+    }}
+  />
+}
+
 export default function(component, options = {}) {
   return function(props) {
     const {location} = useContext(LocationContext);
 
+    console.log(props.route.name);
     return (
       <Stack.Navigator
         mode="modal"
@@ -48,13 +63,7 @@ export default function(component, options = {}) {
           component={StoreSelectionScreen}
           name="StoreSelection"
           options={{
-            headerLeft: () => <Icon
-              name="x"
-              type="feather"
-              size={30}
-              containerStyle={{marginLeft: 15}}
-              onPress={() => props.navigation.goBack()}
-            />,
+            headerLeft: () => <ExitIcon />,
             headerRight: null,
           }}
         />

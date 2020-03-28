@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {FlatList, StyleSheet, View, SafeAreaView} from 'react-native';
 import StackWrapper from "../navigation/StackWrapper";
 import {ListItem} from "react-native-elements";
 import GroceryListContext from "../contexts/GroceryList";
@@ -11,7 +11,7 @@ function YourGroceryListScreen() {
   const {groceryList, setGroceryList} = useContext(GroceryListContext);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <FlatList
         data={Object.entries(groceryList)}
         renderItem={({item: [id, item]}) => {
@@ -36,8 +36,12 @@ function YourGroceryListScreen() {
         onPress={() => {
           // TODO Send grocery list to server
         }}
+        containerStyle={{
+          width: '80%',
+          alignSelf: 'center'
+        }}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
