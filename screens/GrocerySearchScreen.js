@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, SafeAreaView} from 'react-native';
 import {SearchBar} from 'react-native-elements';
-import GroceryItemListing from '../components/GroceryItemLIsting';
+import GroceryItemListing from '../components/GroceryItemListing';
 
 export default function GrocerySearchScreen(props) {
   const [searchValue, setSearchValue] = useState('');
