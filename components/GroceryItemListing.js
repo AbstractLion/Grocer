@@ -1,32 +1,46 @@
-import React from 'react';
-import { StyleSheet, Text, Image } from 'react-native';
+import React, {useContext} from 'react';
+import {StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
 import { Card, Rating } from 'react-native-elements';
+import GroceryListContext from "../contexts/GroceryList";
 
 export default function GroceryItemListing(props) {
+  const {groceryList, setGroceryList} = useContext(GroceryListContext);
+
 	return (
-		<Card title={props.title}>
-			<Image
-				style={styles.itemStyle}
-				source={{
-					uri: props.imageUrl,
+		<TouchableOpacity
+			activeOpacity={0.5}
+			style={styles.container}
+			onPress={() => {
+				setGroceryList({
+					...groceryList,
+					[props.id]: (groceryList[props.id] ?? 0) + 1
+				})
+			}}
+		>
+			<Card
+				title={props.title}
+				containerStyle={styles.container}
+				imageProps={{
+					resizeMode: 'contain'
 				}}
-			/>
-			<Rating
-				imageSize={20}
-				readonly
-				startingValue={props.rating}
-			/>
-			<Text style={styles.textStyle}>${props.price}</Text>
-		</Card>
+				image={{uri: props.imageUrl}}
+			>
+				<Rating
+					imageSize={20}
+					readonly
+					startingValue={props.rating}
+				/>
+				<Text style={styles.price}>${props.price}</Text>
+			</Card>
+		</TouchableOpacity>
 	)
 }
 
 const styles = StyleSheet.create({
-	itemStyle: {
-		width: 100,
-		height: 100,
+  container: {
+		flexGrow: 1
 	},
-	textStyle: {
+	price: {
 		fontWeight: "bold"
 	}
 });

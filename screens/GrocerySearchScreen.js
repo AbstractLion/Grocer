@@ -1,35 +1,50 @@
-import React, {useState} from 'react';
-import {StyleSheet, View, SafeAreaView} from 'react-native';
+import React, {useState, useContext, useEffect} from 'react';
+import {StyleSheet, View, SafeAreaView, FlatList} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 import GroceryItemListing from '../components/GroceryItemListing';
-import {createStackNavigator} from '@react-navigation/stack';
+import StackWrapper from "../navigation/StackWrapper";
+import InventoryContext from "../contexts/InventoryContext";
 
-export default function GrocerySearchScreen(props) {
+function GrocerySearchScreen({navigation, ...props}) {
   const [searchValue, setSearchValue] = useState('');
+  const {inventory, setInventory} = useContext(InventoryContext);
 
   const items = [
     {
+      id: 0,
       title: 'Bananas',
       rating: 4,
       price: 0.99,
-      imageUrl: 'https://react-native-elements.github.io/react-native-elements/docs/rating.html'
+      imageUrl: 'https://cdn.mos.cms.futurecdn.net/42E9as7NaTaAi4A6JcuFwG-320-80.jpg'
     },
     {
+      id: 1,
       title: 'Apples',
       rating: 4,
       price: 0.99
     },
     {
+      id: 2,
       title: 'Toilet Paper',
       rating: 3,
       price: 9.99
     },
     {
+      id: 3,
       title: 'Hand Sanitizer',
       rating: 4,
       price: 12.99
     }
   ];
+
+  useEffect(() => {
+    const itemsObj = {};
+    items.forEach((origItem) => {
+      const {id, ...item} = origItem;
+      itemsObj[id] = item;
+    });
+    setInventory(itemsObj);
+  }, []);
 
   function search() {
 
@@ -44,18 +59,20 @@ export default function GrocerySearchScreen(props) {
         platform="ios"
         containerStyle={{backgroundColor: 'white'}}
       />
-      <View style={styles.groceryItemsContainer}>
-        {
-          items.map((item, index) => {
-            return <GroceryItemListing
-              key={index}
-              title={item.title}
-              rating={item.rating}
-              price={item.price}
-            />
-          })
-        }
-      </View>
+      <FlatList
+        data={items}
+        horizontal={false}
+        numColumns={2}
+        renderItem={({item}) => <GroceryItemListing
+          id={item.id}
+          title={item.title}
+          rating={item.rating}
+          price={item.price}
+          imageUrl={item.imageUrl}
+        />}
+        keyExtractor={(item) => item.id.toString()}
+        contentContainerStyle={styles.listContainer}
+      />
     </SafeAreaView>
   );
 }
@@ -63,11 +80,8 @@ export default function GrocerySearchScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1
-  },
-  groceryItemsContainer: {
-    flex: 1,
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    justifyContent: 'center'
   }
 });
+
+export default StackWrapper(GrocerySearchScreen);
+
