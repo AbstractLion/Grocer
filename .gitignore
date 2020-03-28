@@ -12,3 +12,7 @@ web-report/
 
 # macOS
 .DS_Store
+
+.vs/ProjectSettings.json
+
+.vs/slnx.sqlite
