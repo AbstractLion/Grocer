@@ -1,46 +1,52 @@
-import React from 'react';
+import React, {useState} from 'react';
 import GrocerySearchScreen from './screens/GrocerySearchScreen';
 import GroceryListSearchScreen from './screens/GroceryListSearchScreen';
-import {NavigationContainer} from "@react-navigation/native";
+import YourGroceryListScreen from './screens/YourGroceryListScreen';
+import {NavigationContainer, DrawerActions} from "@react-navigation/native";
 import {createDrawerNavigator} from "@react-navigation/drawer";
-import {createStackNavigator} from '@react-navigation/stack'
-import {Icon} from 'react-native-elements';
+import {navigationRef} from "./navigation/RootNavigation";
+import LocationContext from "./contexts/Location";
+import GroceryListContext from "./contexts/GroceryList";
+import Inventory from "./contexts/Inventory";
 
-const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-function Main() {
-  return (
-    <Drawer.Navigator>
-      <Drawer.Screen
-        name="GrocerySearch"
-        component={GrocerySearchScreen}
-      />
-      <Drawer.Screen
-        name="GroceryListSearch"
-        component={GroceryListSearchScreen}
-      />
-    </Drawer.Navigator>
-  );
-}
-
 export default function App() {
+  const [location, setLocation] = useState("Walmart");
+  const [groceryList, setGroceryList] = useState({});
+  const [inventory, setInventory] = useState({});
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Main"
-        screenOptions={{
-          headerLeft: () => <Icon
-            type="entypo"
-            name="menu"
-          />
-        }}
-      >
-        <Stack.Screen
-          name="Main"
-          component={Main}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <LocationContext.Provider value={{location, setLocation}}>
+      <GroceryListContext.Provider value={{groceryList, setGroceryList}}>
+        <Inventory.Provider value={{inventory, setInventory}}>
+          <NavigationContainer ref={navigationRef}>
+            <Drawer.Navigator>
+              <Drawer.Screen
+                name="GrocerySearch"
+                options={{
+                  title: "Groceries"
+                }}
+                component={GrocerySearchScreen}
+              />
+              <Drawer.Screen
+                name="GroceryListSearch"
+                options={{
+                  title: "Grocery Lists"
+                }}
+                component={GroceryListSearchScreen}
+              />
+              <Drawer.Screen
+                name="YourGroceryList"
+                options={{
+                  title: "Your Grocery List"
+                }}
+                component={YourGroceryListScreen}
+              />
+            </Drawer.Navigator>
+          </NavigationContainer>
+        </Inventory.Provider>
+      </GroceryListContext.Provider>
+    </LocationContext.Provider>
   );
 }
