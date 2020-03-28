@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, Image } from 'react-native';
-import { Card } from 'react-native-elements';
+import { Card, Rating } from 'react-native-elements';
 
 export default function GroceryItemListing(props) {
 	return (
@@ -11,8 +11,12 @@ export default function GroceryItemListing(props) {
 					uri: props.imageUrl,
 				}}
 			/>
-			<Text>{props.rating}</Text>
-			<Text>${props.price}</Text>
+			<Rating
+				imageSize={20}
+				readonly
+				startingValue={props.rating}
+			/>
+			<Text style={styles.textStyle}>${props.price}</Text>
 		</Card>
 	)
 }
@@ -22,4 +26,7 @@ const styles = StyleSheet.create({
 		width: 100,
 		height: 100,
 	},
+	textStyle: {
+		fontWeight: "bold"
+	}
 });
