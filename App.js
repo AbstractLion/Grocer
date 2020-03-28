@@ -26,7 +26,7 @@ function Main() {
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="Main">
         <Stack.Screen
           name="Main"
           component={Main}
