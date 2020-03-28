@@ -1,41 +1,54 @@
-import React, {useState, useContext} from 'react';
-import {StyleSheet, Text, Image, TouchableOpacity, View} from 'react-native';
+import React, {useContext} from 'react';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import { Card, Rating } from 'react-native-elements';
 import GroceryListContext from "../contexts/GroceryList";
-import ItemCounter from './ItemCounter';
 
-export default function GroceryItemListing(props) {
+export default function GroceryItemListing({
+	id,
+	title,
+	imageUrl,
+	rating,
+	price
+}) {
   const {groceryList, setGroceryList} = useContext(GroceryListContext);
 
 	return (
-		<View style={styles.container}>
-			<TouchableOpacity
-				activeOpacity={0.5}
-				onPress={() => {
-					setGroceryList({
-						...groceryList,
-						[props.id]: (groceryList[props.id] ?? 0) + 1
-					});
-					props.showSnackbar();
+		<TouchableOpacity
+      style={styles.container}
+			activeOpacity={0.5}
+			onPress={() => {
+				groceryList[id] = groceryList[id] || {
+					title,
+					imageUrl,
+					price,
+					count: 0,
+				};
+				const count = groceryList[id].count;
+				if (count < 9) {
+					const newItem = {
+						...groceryList[id],
+						count: count + 1
+			    };
+					setGroceryList({...groceryList, [id]: newItem});
+				}
+			}}
+		>
+			<Card
+				title={title}
+				containerStyle={styles.container}
+				imageProps={{
+					resizeMode: 'contain'
 				}}
+				image={{uri: imageUrl}}
 			>
-				<Card
-					title={props.title}
-					containerStyle={styles.container}
-					imageProps={{
-						resizeMode: 'contain'
-					}}
-					image={{uri: props.imageUrl}}
-				>
-					<Rating
-						imageSize={20}
-						readonly
-						startingValue={props.rating}
-					/>
-					<Text style={styles.price}>${props.price}</Text>
-				</Card>
-			</TouchableOpacity>
-		</View>
+				<Rating
+					imageSize={20}
+					readonly
+					startingValue={rating}
+				/>
+				<Text style={styles.price}>${price}</Text>
+			</Card>
+		</TouchableOpacity>
 	)
 }
 

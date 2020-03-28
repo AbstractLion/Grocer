@@ -12,24 +12,28 @@ export default function ItemCounter({id}) {
         icon={{name: 'minus', type: 'entypo'}}
         type='clear'
         onPress={() => {
-          if (groceryList[id] > 1) {
-            setGroceryList({
-              ...groceryList,
-              [id]: groceryList[id] - 1
-            })
+          const count = groceryList[id].count;
+          if (count > 1) {
+            const newItem = {
+              ...groceryList[id],
+              count: count - 1
+            };
+            setGroceryList({...groceryList, [id]: newItem})
           }
         }}
       />
-      <Text style={styles.count}>{groceryList[id]}</Text>
+      <Text style={styles.count}>{groceryList[id].count ?? 0}</Text>
       <Button
         type="clear"
         icon={{name: 'plus', type: 'entypo'}}
         onPress={() => {
-          if (groceryList[id] < 9) {
-            setGroceryList({
-              ...groceryList,
-              [id]: groceryList[id] + 1
-            })
+          const count = groceryList[id].count;
+          if (count < 9) {
+            const newItem = {
+              ...groceryList[id],
+              count: count + 1
+            };
+            setGroceryList({...groceryList, [id]: newItem});
           }
         }}
       />

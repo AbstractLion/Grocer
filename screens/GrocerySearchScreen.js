@@ -3,12 +3,9 @@ import {StyleSheet, View, SafeAreaView, FlatList, Text} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 import GroceryItemListing from '../components/GroceryItemListing';
 import StackWrapper from "../navigation/StackWrapper";
-import Inventory from "../contexts/Inventory";
 
 function GrocerySearchScreen({navigation, ...props}) {
   const [searchValue, setSearchValue] = useState('');
-  const [snackbarVisibility, setSnackbarVisibility] = useState(false);
-  const {inventory, setInventory} = useContext(Inventory);
 
   const items = [
     {
@@ -38,15 +35,6 @@ function GrocerySearchScreen({navigation, ...props}) {
     }
   ];
 
-  useEffect(() => {
-    const itemsObj = {};
-    items.forEach((origItem) => {
-      const {id, ...item} = origItem;
-      itemsObj[id] = item;
-    });
-    setInventory(itemsObj);
-  }, []);
-
   function search() {
 
   }
@@ -70,7 +58,6 @@ function GrocerySearchScreen({navigation, ...props}) {
           rating={item.rating}
           price={item.price}
           imageUrl={item.imageUrl}
-          showSnackbar={() => setSnackbarVisibility(true)}
         />}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={styles.listContainer}
@@ -82,9 +69,6 @@ function GrocerySearchScreen({navigation, ...props}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1
-  },
-  snackbarText: {
-    fontSize: 16
   },
 });
 
