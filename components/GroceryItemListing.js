@@ -4,7 +4,10 @@ import { Card, Image } from 'react-native-elements';
 
 export default function GroceryItemListing(props) {
 	return (
-		<Text></Text>
+		<Card title={props.name} image={props.imageUrl}>
+			<Text>{props.rating}</Text>
+			<Text>{props.price}</Text>
+		</Card>
   );
 }
 
