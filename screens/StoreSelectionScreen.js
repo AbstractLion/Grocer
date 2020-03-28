@@ -49,8 +49,10 @@ export default function StoreSelectionScreen() {
         console.log(store.coords);
         return (
           <MapView.Marker
-            key={store.name}
-            coordinate={store.coords}
+              key={store.name}
+              title={store.name}
+              coordinate={store.coords}
+              onPress={() => console.log("Marker Pressed")}
           />
         )
       })}
