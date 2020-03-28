@@ -35,6 +35,27 @@ function GroceryItemSearchScreen({navigation, ...props}) {
       rating: 4,
       price: 12.99,
       imageUrl: 'http://sites.psu.edu/siowfa14/wp-content/uploads/sites/13467/2014/10/Purell.jpg',
+    },
+    {
+      id: 4,
+      title: 'Rice',
+      rating: 4,
+      price: 12.99,
+      imageUrl: 'https://img1.etsystatic.com/070/2/11407220/il_fullxfull.809880803_3cpe.jpg',
+    },
+    {
+      id: 5,
+      title: 'Isopropanol Alcohol',
+      rating: 4,
+      price: 12.99,
+      imageUrl: 'http://www.inktechnologies.com/blog/wp-content/uploads/2010/06/Isopropyl-Alcohol.jpg',
+    },
+    {
+      id: 6,
+      title: 'COVID-19 Testing Kit',
+      rating: 4,
+      price: 12.99,
+      imageUrl: 'https://wheninmanila.blob.core.windows.net/wheninmanilabucket/2020/03/COVID19-Test-Kit.jpg',
     }
   ];
 
