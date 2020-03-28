@@ -1,6 +1,6 @@
 import React from "react";
-import {View, Dimensions, StyleSheet, FlatList} from 'react-native';
-import MapView from 'react-native-maps';
+import {View, Dimensions, StyleSheet, FlatList, Text, Button} from 'react-native';
+import MapView, {Callout} from 'react-native-maps';
 import { useNavigation } from '@react-navigation/native';
 
 const storeLocations = [
@@ -54,10 +54,18 @@ export default function StoreSelectionScreen() {
               key={store.name}
               title={store.name}
               coordinate={store.coords}
-              onPress={() => {
-                navigation.setOptions({ title: store.name })
-              }}
-          />
+
+          >
+            <Callout
+                onPress={() => {
+                  navigation.setOptions({ title: store.name })
+                }}
+                style={styles.callout}
+            >
+              <Text style={styles.calloutText}>{store.name}{'\n'}</Text>
+              <Button title="Select"/>
+            </Callout>
+          </MapView.Marker>
         )
       })}
     </MapView>
@@ -69,5 +77,11 @@ const styles = new StyleSheet.create({
   mapStyle: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
+  },
+  calloutText: {
+    fontWeight: "bold"
+  },
+  callout: {
+    padding: 10
   }
 });
