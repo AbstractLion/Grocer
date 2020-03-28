@@ -12,22 +12,25 @@ export default function GrocerySearchScreen(props) {
       title: 'Bananas',
       rating: 4,
       price: 0.99,
-      imageUrl: 'https://react-native-elements.github.io/react-native-elements/docs/rating.html'
+      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Cavendish_Banana_DS.jpg/1920px-Cavendish_Banana_DS.jpg',
     },
     {
       title: 'Apples',
       rating: 4,
-      price: 0.99
+      price: 0.99,
+      imageUrl: 'https://knowledge.wharton.upenn.edu/wp-content/uploads/2014/03/apple.jpg',
     },
     {
       title: 'Toilet Paper',
       rating: 3,
-      price: 9.99
+      price: 9.99,
+      imageUrl: 'https://www.shtfplan.com/wp-content/uploads/2020/03/toiletpaper-e1584452993392.jpg',
     },
     {
       title: 'Hand Sanitizer',
       rating: 4,
-      price: 12.99
+      price: 12.99,
+      imageUrl: 'http://sites.psu.edu/siowfa14/wp-content/uploads/sites/13467/2014/10/Purell.jpg',
     }
   ];
 
@@ -52,6 +55,7 @@ export default function GrocerySearchScreen(props) {
               title={item.title}
               rating={item.rating}
               price={item.price}
+              imageUrl={item.imageUrl}
             />
           })
         }
