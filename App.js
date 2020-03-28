@@ -7,7 +7,7 @@ import {createDrawerNavigator} from "@react-navigation/drawer";
 import {navigationRef} from "./navigation/RootNavigation";
 import LocationContext from "./contexts/Location";
 import GroceryListContext from "./contexts/GroceryList";
-import InventoryContext from "./contexts/InventoryContext";
+import Inventory from "./contexts/Inventory";
 
 const Drawer = createDrawerNavigator();
 
@@ -19,7 +19,7 @@ export default function App() {
   return (
     <LocationContext.Provider value={{location, setLocation}}>
       <GroceryListContext.Provider value={{groceryList, setGroceryList}}>
-        <InventoryContext.Provider value={{inventory, setInventory}}>
+        <Inventory.Provider value={{inventory, setInventory}}>
           <NavigationContainer ref={navigationRef}>
             <Drawer.Navigator>
               <Drawer.Screen
@@ -45,7 +45,7 @@ export default function App() {
               />
             </Drawer.Navigator>
           </NavigationContainer>
-        </InventoryContext.Provider>
+        </Inventory.Provider>
       </GroceryListContext.Provider>
     </LocationContext.Provider>
   );

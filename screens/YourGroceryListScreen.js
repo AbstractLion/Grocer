@@ -4,7 +4,7 @@ import StackWrapper from "../navigation/StackWrapper";
 import {ListItem} from "react-native-elements";
 import GroceryListContext from "../contexts/GroceryList";
 import ItemCounter from "../components/ItemCounter";
-import InventoryContext from "../contexts/InventoryContext";
+import InventoryContext from "../contexts/Inventory";
 
 function YourGroceryListScreen() {
   const {groceryList, setGroceryList} = useContext(GroceryListContext);
@@ -17,7 +17,7 @@ function YourGroceryListScreen() {
         const item = inventory[id];
         return <ListItem
           leftAvatar={{source: {uri: item.imageUrl}}}
-          rightElement={<ItemCounter />}
+          rightElement={<ItemCounter id={id}/>}
           title={item.title}
           bottomDivider={true}
         />
