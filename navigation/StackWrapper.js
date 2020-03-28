@@ -21,6 +21,20 @@ function ExitIcon() {
   />
 }
 
+function ConfirmIcon() {
+    const navigation = useNavigation();
+
+    return <Icon
+        name="check"
+        type="feather"
+        size={30}
+        containerStyle={{marginRight: 15}}
+        onPress={() => {
+            navigation.pop();
+        }}
+    />
+}
+
 export default function(component, options = {}) {
   return function(props) {
     const {location} = useContext(LocationContext);
@@ -63,8 +77,9 @@ export default function(component, options = {}) {
           component={StoreSelectionScreen}
           name="StoreSelection"
           options={{
+            title: 'Select a store',
             headerLeft: () => <ExitIcon />,
-            headerRight: null,
+            headerRight: () => <ConfirmIcon/>,
           }}
         />
       </Stack.Navigator>

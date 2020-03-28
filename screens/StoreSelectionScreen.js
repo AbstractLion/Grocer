@@ -1,6 +1,7 @@
 import React from "react";
 import {View, Dimensions, StyleSheet, FlatList} from 'react-native';
 import MapView from 'react-native-maps';
+import { useNavigation } from '@react-navigation/native';
 
 const storeLocations = [
   {
@@ -34,6 +35,7 @@ const storeLocations = [
 ];
 
 export default function StoreSelectionScreen() {
+  const navigation = useNavigation();
   return (
   <View>
     <MapView
@@ -52,7 +54,9 @@ export default function StoreSelectionScreen() {
               key={store.name}
               title={store.name}
               coordinate={store.coords}
-              onPress={() => console.log("Marker Pressed")}
+              onPress={() => {
+                navigation.setOptions({ title: store.name })
+              }}
           />
         )
       })}
