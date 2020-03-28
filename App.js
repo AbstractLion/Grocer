@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import GrocerySearchScreen from './screens/GroceryItemSearchScreen';
+import GroceryItemSearchScreen from './screens/GroceryItemSearchScreen';
 import GroceryListSearchScreen from './screens/GroceryListSearchScreen';
 import YourGroceryListScreen from './screens/YourGroceryListScreen';
 import {NavigationContainer, DrawerActions} from "@react-navigation/native";
@@ -24,7 +24,7 @@ export default function App() {
               options={{
                 title: "Groceries"
               }}
-              component={GrocerySearchScreen}
+              component={GroceryItemSearchScreen}
             />
             <Drawer.Screen
               name="GroceryListSearch"
