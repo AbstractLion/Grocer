@@ -31,7 +31,7 @@ const storeLocations = [
       longitude: -72.336230,
     }
   },
-]
+];
 
 export default function StoreSelectionScreen() {
   return (

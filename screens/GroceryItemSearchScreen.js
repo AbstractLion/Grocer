@@ -4,7 +4,7 @@ import {SearchBar} from 'react-native-elements';
 import GroceryItemListing from '../components/GroceryItemListing';
 import StackWrapper from "../navigation/StackWrapper";
 
-function GrocerySearchScreen({navigation, ...props}) {
+function GroceryItemSearchScreen({navigation, ...props}) {
   const [searchValue, setSearchValue] = useState('');
 
   const items = [
@@ -75,5 +75,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default StackWrapper(GrocerySearchScreen);
+export default StackWrapper(GroceryItemSearchScreen);
 
