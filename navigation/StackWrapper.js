@@ -4,6 +4,7 @@ import {Icon} from "react-native-elements";
 import {useNavigation, DrawerActions} from '@react-navigation/native';
 import LocationContext from "../contexts/Location";
 import StoreSelectionScreen from "../screens/StoreSelectionScreen";
+import StackWrapperScreenOptions from "../constants/StackWrapperScreenOptions";
 
 const Stack = createStackNavigator();
 
@@ -43,26 +44,7 @@ export default function(component, options = {}) {
       <Stack.Navigator
         mode="modal"
         initialRouteName={props.route.name}
-        screenOptions={{
-          headerLeft: () => <Icon
-            name="menu"
-            type="entypo"
-            size={30}
-            containerStyle={{marginLeft: 15}}
-            onPress={() => {
-              props.navigation.dispatch(DrawerActions.toggleDrawer());
-            }}
-          />,
-          headerRight: () => <Icon
-            name="location-pin"
-            type="entypo"
-            size={30}
-            containerStyle={{marginRight: 15}}
-            onPress={() => {
-              props.navigation.navigate("StoreSelection");
-            }}
-          />
-        }}
+        screenOptions={StackWrapperScreenOptions}
       >
         <Stack.Screen
           component={component}
