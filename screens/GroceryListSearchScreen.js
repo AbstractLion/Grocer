@@ -1,12 +1,19 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
 import StackWrapper from '../navigation/StackWrapper';
 import {ListItem, SearchBar} from "react-native-elements";
 import GroceryListScreen from "./GroceryListScreen";
 import {createStackNavigator} from "@react-navigation/stack";
+import StackWrapperScreenOptions from "../constants/StackWrapperScreenOptions";
 
 function GroceryListSearch({navigation}) {
   const [searchValue, setSearchValue] = useState('');
+
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      navigation.dangerouslyGetParent()?.setOptions(StackWrapperScreenOptions);
+    });
+  }, [navigation]);
 
   const groceryLists = [
     {
