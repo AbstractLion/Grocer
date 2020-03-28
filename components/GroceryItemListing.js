@@ -58,5 +58,5 @@ const styles = StyleSheet.create({
 	},
 	price: {
 		fontWeight: "bold"
-	}
+	},
 });

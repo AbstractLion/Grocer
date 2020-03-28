@@ -19,19 +19,22 @@ function GrocerySearchScreen({navigation, ...props}) {
       id: 1,
       title: 'Apples',
       rating: 4,
-      price: 0.99
+      price: 0.99,
+      imageUrl: 'https://knowledge.wharton.upenn.edu/wp-content/uploads/2014/03/apple.jpg',
     },
     {
       id: 2,
       title: 'Toilet Paper',
       rating: 3,
-      price: 9.99
+      price: 9.99,
+      imageUrl: 'https://www.shtfplan.com/wp-content/uploads/2020/03/toiletpaper-e1584452993392.jpg',
     },
     {
       id: 3,
       title: 'Hand Sanitizer',
       rating: 4,
-      price: 12.99
+      price: 12.99,
+      imageUrl: 'http://sites.psu.edu/siowfa14/wp-content/uploads/sites/13467/2014/10/Purell.jpg',
     }
   ];
 
