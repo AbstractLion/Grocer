@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
 import StackWrapper from '../navigation/StackWrapper';
-import {SearchBar} from "react-native-elements";
-import GroceryItemListing from "../components/GroceryItemListing";
+import {ListItem, SearchBar} from "react-native-elements";
+import GroceryListScreen from "./GroceryListScreen";
+import {createStackNavigator} from "@react-navigation/stack";
 
-function GroceryListSearchScreen() {
+function GroceryListSearch({navigation}) {
   const [searchValue, setSearchValue] = useState('');
 
   const groceryLists = [
@@ -52,13 +53,13 @@ function GroceryListSearchScreen() {
       <FlatList
         data={groceryLists}
         horizontal={false}
-        numColumns={2}
-        renderItem={({item}) => <GroceryItemListing
-          id={item.id}
-          title={item.title}
-          rating={item.rating}
-          price={item.price}
-          imageUrl={item.imageUrl}
+        renderItem={({item}) => <ListItem
+          chevron={true}
+          title={item.author}
+          subtitle={item.createdAt}
+          onPress={() => {
+            navigation.navigate("GroceryList", item);
+          }}
         />}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={styles.listContainer}
@@ -72,6 +73,27 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
+
+const Stack = createStackNavigator();
+
+function GroceryListSearchScreen() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false
+      }}
+    >
+      <Stack.Screen
+        name="GroceryListSearch"
+        component={GroceryListSearch}
+      />
+      <Stack.Screen
+        name="GroceryList"
+        component={GroceryListScreen}
+      />
+    </Stack.Navigator>
+  )
+}
 
 export default StackWrapper(GroceryListSearchScreen);
 
