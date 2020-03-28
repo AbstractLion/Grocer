@@ -39,7 +39,6 @@ export default function(component, options = {}) {
   return function(props) {
     const {location} = useContext(LocationContext);
 
-    console.log(props.route.name);
     return (
       <Stack.Navigator
         mode="modal"

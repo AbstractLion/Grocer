@@ -56,7 +56,7 @@ function GroceryListSearch({navigation}) {
         renderItem={({item}) => <ListItem
           chevron={true}
           title={item.author}
-          subtitle={item.createdAt}
+          subtitle={'' + item.createdAt}
           onPress={() => {
             navigation.navigate("GroceryList", item);
           }}

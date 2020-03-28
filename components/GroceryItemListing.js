@@ -35,6 +35,8 @@ export default function GroceryItemListing({
 		>
 			<Card
 				title={title}
+        titleStyle={{flexWrap: 'wrap'}}
+
 				containerStyle={styles.container}
 				imageProps={{
 					resizeMode: 'contain'

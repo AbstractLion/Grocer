@@ -62,7 +62,6 @@ export default function StoreSelectionScreen() {
       }}
     >
       {storeLocations.map(store => {
-        console.log(store.coords);
         return (
           <Marker
               key={store.name}
