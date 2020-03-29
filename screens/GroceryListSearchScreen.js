@@ -5,6 +5,7 @@ import {ListItem, SearchBar} from "react-native-elements";
 import GroceryListScreen from "./GroceryListScreen";
 import {createStackNavigator} from "@react-navigation/stack";
 import StackWrapperScreenOptions from "../constants/StackWrapperScreenOptions";
+import cuid from "cuid";
 
 function GroceryListSearch({navigation}) {
   const [searchValue, setSearchValue] = useState('');
@@ -19,6 +20,7 @@ function GroceryListSearch({navigation}) {
     {
       id: 0,
       author: 'Dragon',
+      qrCode: cuid(),
       createdAt: Date.now(),
       items: [
         {
@@ -34,6 +36,7 @@ function GroceryListSearch({navigation}) {
     {
       id: 1,
       author: 'Leon',
+      qrCode: cuid(),
       createdAt: Date.now(),
       items: [
         {

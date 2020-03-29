@@ -42,7 +42,7 @@ export default function GroceryListScreen({navigation, route}) {
                 keyExtractor={item => item.id}
             />
             <SvgQRCode
-                value="http://facebook.github.io/react-native"
+                value={route.params.qrCode}
             />
         </View>
     );
