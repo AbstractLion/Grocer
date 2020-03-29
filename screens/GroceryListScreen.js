@@ -32,7 +32,7 @@ export default function GroceryListScreen({navigation, route}) {
                     <View>
                         <ListItem
                             leftAvatar={{source: {uri: item.imageUrl}}}
-                            rightElement={item.count}
+                            rightElement={{primaryText: item.count?.toString()}}
                             title={item.title}
                             bottomDivider={true}
                         />
