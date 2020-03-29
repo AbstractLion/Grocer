@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import {View, Text, FlatList, Image, StyleSheet} from 'react-native';
 import SvgQRCode from 'react-native-qrcode-svg';
 import {Icon, ListItem, Rating} from "react-native-elements";
-import ItemCounter from "../components/ItemCounter";
 
 export default function GroceryListScreen({navigation, route}) {
     useEffect(() => {
@@ -48,6 +47,9 @@ export default function GroceryListScreen({navigation, route}) {
                     value={route.params.qrCode}
                 />
             </View>
+          <Text style={{fontWeight: 'bold', margin: 20, textAlign: 'center'}}>
+            Show this to an employee in the current store to start helping somebody vulnerable to their groceries!
+          </Text>
         </View>
     );
 }
@@ -58,7 +60,6 @@ const styles = StyleSheet.create({
         width: 50,
     },
     qrStyle: {
-        padding: 100,
         alignItems: 'center'
     }
 });

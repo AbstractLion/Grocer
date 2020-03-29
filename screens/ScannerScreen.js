@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import StackWrapper from "../navigation/StackWrapper";
 
@@ -33,12 +33,13 @@ class QRCodeScanner extends React.Component {
           flex: 1,
           flexDirection: 'column',
           justifyContent: 'flex-start',
+          alignItems: 'stretch',
           marginTop: 30,
           marginBottom: 30
         }}>
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : this.handleBarCodeScanned}
-          style={{flex: -1, height: 300, width: 500}}
+          style={{flex: -1, width: "100%", height: "100%", alignSelf: 'stretch'}}
         />
         <Text
           style={{fontWeight: 'bold', textAlign: 'center', margin: 50}}
