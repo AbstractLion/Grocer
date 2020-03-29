@@ -10,6 +10,7 @@ import cuid from "cuid";
 
 function GroceryListSearch({navigation}) {
   const [searchValue, setSearchValue] = useState('');
+  const [groceryLists, updateGroceryLists] = useState([]);
 
   useEffect(() => {
     navigation.addListener('focus', () => {
@@ -17,43 +18,19 @@ function GroceryListSearch({navigation}) {
     });
   }, [navigation]);
 
-  const groceryLists = [
-    {
-      id: 0,
-      author: 'Dragon',
-      qrCode: cuid(),
-      createdAt: Date.now(),
-      items: [
-        {
-          id: 36,
-          title: "Dragonfruit",
-          rating: 1,
-          imageUrl: "https://qflf.files.wordpress.com/2011/03/dragon-fruit.jpg",
-          price: 20.04,
-          count: 523
-        }
-      ],
-    },
-    {
-      id: 1,
-      author: 'Leon',
-      qrCode: cuid(),
-      createdAt: Date.now(),
-      items: [
-        {
-          id: 37,
-          title: "Lion Meat",
-          rating: 1,
-          imageUrl: "https://4.bp.blogspot.com/--P2GA1UFT24/Ue4RohErWAI/AAAAAAAAT9k/L2c0KN6l65Y/s1600/2a+lion+stew+meat.JPG",
-          price: 20.04,
-          count: 523
-        }
-      ],
-    }
-  ];
-
   function search() {
 
+  }
+
+  function updateData() {
+    fetch('https://grocer-app-flask.herokuapp.com/lists')
+        .then((response) => response.json())
+        .then((json) => {
+          updateGroceryLists(json.data);
+        })
+        .catch((error) => {
+          console.error("Error occured while getting item list");
+        });
   }
 
   return (
