@@ -6,6 +6,7 @@ import GroceryListContext from "../contexts/GroceryList";
 import ItemCounter from "../components/ItemCounter";
 import {SwipeRow} from 'react-native-swipe-list-view';
 import {Button} from 'react-native-elements';
+import cuid from 'cuid';
 
 function YourGroceryListScreen() {
     const {groceryList, setGroceryList} = useContext(GroceryListContext);
@@ -41,9 +42,10 @@ function YourGroceryListScreen() {
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
+                            id: Math.floor(Math.random()*10000000000000000),
                             author: "TODO",
-                            createdAt: "35",
-                            qrCode: Math.random()*10000000000000000,
+                            createdAt: Date.now(),
+                            qrCode: cuid(),
                             items: groceryList,
                         }),
                     });
