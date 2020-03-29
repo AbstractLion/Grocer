@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
-import { Card, Rating } from 'react-native-elements';
+import {Button, Card, Rating} from 'react-native-elements';
 import GroceryListContext from "../contexts/GroceryList";
 
 export default function GroceryItemListing({
@@ -13,30 +13,9 @@ export default function GroceryItemListing({
   const {groceryList, setGroceryList} = useContext(GroceryListContext);
 
 	return (
-		<TouchableOpacity
-      style={styles.container}
-			activeOpacity={0.5}
-			onPress={() => {
-				groceryList[id] = groceryList[id] || {
-					title,
-					imageUrl,
-					price,
-					count: 0,
-				};
-				const count = groceryList[id].count;
-				if (count < 9) {
-					const newItem = {
-						...groceryList[id],
-						count: count + 1
-			    };
-					setGroceryList({...groceryList, [id]: newItem});
-				}
-			}}
-		>
 			<Card
 				title={title}
         titleStyle={{flexWrap: 'wrap'}}
-
 				containerStyle={styles.container}
 				imageProps={{
 					resizeMode: 'contain'
@@ -48,9 +27,27 @@ export default function GroceryItemListing({
 					readonly
 					startingValue={rating}
 				/>
-				<Text style={styles.price}>${price}</Text>
+				<Button
+					title={`\$${price}`}
+          titleStyle={styles.price}
+					onPress={() => {
+						groceryList[id] = groceryList[id] || {
+							title,
+							imageUrl,
+							price,
+							count: 0,
+						};
+						const count = groceryList[id].count;
+						if (count < 9) {
+							const newItem = {
+								...groceryList[id],
+								count: count + 1
+							};
+							setGroceryList({...groceryList, [id]: newItem});
+						}
+					}}
+				/>
 			</Card>
-		</TouchableOpacity>
 	)
 }
 

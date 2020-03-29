@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {FlatList, StyleSheet, View, SafeAreaView} from 'react-native';
+import {FlatList, StyleSheet, View, SafeAreaView, Text, TouchableHighlight} from 'react-native';
 import StackWrapper from "../navigation/StackWrapper";
 import {ListItem} from "react-native-elements";
 import GroceryListContext from "../contexts/GroceryList";
@@ -17,20 +17,31 @@ function YourGroceryListScreen() {
         data={Object.entries(groceryList)}
         ListEmptyComponent={
           <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            Your cart is empty!
+            <Text style={{margin: 50, fontSize: 16}}>Your cart is empty!</Text>
           </View>
         }
         renderItem={({item: [id, item]}) => {
           return (
             <SwipeRow
-              leftOpenValue={75}
+              leftOpenValue={80}
             >
-              <View style={styles.swipe}/>
+              <View style={styles.swipe}>
+                <TouchableHighlight
+                  onPress={() => {
+                    let newList = {...groceryList};
+                    delete newList[id];
+                    setGroceryList(newList);
+                  }}
+                >
+                  <Text style={{fontWeight: 'bold', fontSize: 16, color: 'white'}}>Delete</Text>
+                </TouchableHighlight>
+              </View>
               <ListItem
                 leftAvatar={{source: {uri: item.imageUrl}}}
                 rightElement={<ItemCounter id={id}/>}
                 title={item.title}
                 bottomDivider={true}
+                containerStyle={styles.listItem}
               />
             </SwipeRow>
           );
@@ -71,8 +82,17 @@ const styles = StyleSheet.create({
     flex: 1
   },
   swipe: {
-    backgroundColor: 'red'
+    alignItems: 'center',
+    backgroundColor: 'red',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 15,
+  },
+  listItem: {
+    height: 75
   }
+
 });
 
 export default StackWrapper(YourGroceryListScreen, {
