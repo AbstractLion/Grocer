@@ -42,6 +42,8 @@ function YourGroceryListScreen() {
                         },
                         body: JSON.stringify({
                             author: "TODO",
+                            createdAt: "35",
+                            qrCode: Math.random()*10000000000000000,
                             items: groceryList,
                         }),
                     });
