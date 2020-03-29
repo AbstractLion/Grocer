@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
-
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import StackWrapper from "../navigation/StackWrapper";
 
-export default class BarcodeScannerExample extends React.Component {
+class QRCodeScanner extends React.Component {
   state = {
     hasCameraPermission: null,
     scanned: false,
@@ -32,19 +32,20 @@ export default class BarcodeScannerExample extends React.Component {
         style={{
           flex: 1,
           flexDirection: 'column',
-          justifyContent: 'flex-end',
+          justifyContent: 'flex-start',
+          marginTop: 30,
+          marginBottom: 30
         }}>
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : this.handleBarCodeScanned}
-          style={StyleSheet.absoluteFillObject}
+          style={{flex: -1, height: 300, width: 500}}
         />
+        <Text
+          style={{fontWeight: 'bold', textAlign: 'center', margin: 50}}
 
-        {scanned && (
-          <Button
-            title={'Tap to Scan Again'}
-            onPress={() => this.setState({ scanned: false })}
-          />
-        )}
+        >
+          Scan a shopper's QR Code to allow them to prepare groceries for somebody else!
+        </Text>
       </View>
     );
   }
@@ -54,3 +55,7 @@ export default class BarcodeScannerExample extends React.Component {
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   };
 }
+
+export default StackWrapper(QRCodeScanner, {
+  headerRight: null,
+});
