@@ -41,9 +41,13 @@ export default function GroceryListScreen({navigation, route}) {
                 )}
                 keyExtractor={item => item.id}
             />
-            <SvgQRCode
-                value={route.params.qrCode}
-            />
+            <View
+                style={styles.qrStyle}
+            >
+                <SvgQRCode
+                    value={route.params.qrCode}
+                />
+            </View>
         </View>
     );
 }
@@ -52,5 +56,9 @@ const styles = StyleSheet.create({
     imageStyle: {
         height: 50,
         width: 50,
+    },
+    qrStyle: {
+        padding: 100,
+        alignItems: 'center'
     }
 });
