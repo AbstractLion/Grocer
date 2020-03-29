@@ -7,6 +7,7 @@ import {createDrawerNavigator} from "@react-navigation/drawer";
 import {navigationRef} from "./navigation/RootNavigation";
 import LocationContext from "./contexts/Location";
 import GroceryListContext from "./contexts/GroceryList";
+import ScannerScreen from "./screens/ScannerScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -39,6 +40,13 @@ export default function App() {
                 title: "Your Grocery List"
               }}
               component={YourGroceryListScreen}
+            />
+            <Drawer.Screen
+              name="Scanner"
+              options={{
+                title: "Scan QR Code"
+              }}
+              component={ScannerScreen}
             />
           </Drawer.Navigator>
         </NavigationContainer>

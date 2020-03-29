@@ -5,6 +5,7 @@ import {ListItem, SearchBar} from "react-native-elements";
 import GroceryListScreen from "./GroceryListScreen";
 import {createStackNavigator} from "@react-navigation/stack";
 import StackWrapperScreenOptions from "../constants/StackWrapperScreenOptions";
+import dateFormat from 'dateformat';
 
 function GroceryListSearch({navigation}) {
   const [searchValue, setSearchValue] = useState('');
@@ -67,7 +68,8 @@ function GroceryListSearch({navigation}) {
         renderItem={({item}) => <ListItem
           chevron={true}
           title={item.author}
-          subtitle={'' + item.createdAt}
+          titleStyle={{fontWeight: 'bold'}}
+          subtitle={dateFormat(item.createdAt, "dddd, mmmm dS, yyyy, h:MM:ss TT")}
           onPress={() => {
             navigation.navigate("GroceryList", item);
           }}
