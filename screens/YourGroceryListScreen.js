@@ -11,8 +11,7 @@ import cuid from 'cuid';
 
 function YourGroceryListScreen() {
   const {groceryList, setGroceryList} = useContext(GroceryListContext);
-  const {user} = useContext(UserContext);
-
+  console.log(groceryList);
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
@@ -40,8 +39,8 @@ function YourGroceryListScreen() {
               </View>
               <ListItem
                 leftAvatar={{source: {uri: item.imageUrl}}}
-                rightElement={<ItemCounter _id={_id}/>}
-                title={item.title}
+                rightElement={<ItemCounter id={id}/>}
+                title={item.name}
                 bottomDivider={true}
                 containerStyle={styles.listItem}
               />
