@@ -52,7 +52,7 @@ function YourGroceryListScreen() {
         title="Submit Grocery List Request"
         disabled={Object.keys(groceryList).length === 0}
         onPress={() => {
-          fetch('/lists', {
+          fetch('https://grocer-app-flask.herokuapp.com/lists', {
             method: 'POST',
             headers: {
               Accept: 'application/json',

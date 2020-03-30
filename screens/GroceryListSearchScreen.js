@@ -11,6 +11,7 @@ import {useFocusEffect} from "@react-navigation/core";
 
 function GroceryListSearch({navigation}) {
   const [searchValue, setSearchValue] = useState('');
+  const [groceryLists, updateGroceryLists] = useState([]);
 
   const groceryLists = [
     {
@@ -46,9 +47,25 @@ function GroceryListSearch({navigation}) {
       ],
     }
   ];
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      navigation.dangerouslyGetParent()?.setOptions(StackWrapperScreenOptions);
+    });
+  }, [navigation]);
 
   function search() {
 
+  }
+
+  function updateData() {
+    fetch('https://grocer-app-flask.herokuapp.com/lists')
+        .then((response) => response.json())
+        .then((json) => {
+          updateGroceryLists(json.data);
+        })
+        .catch((error) => {
+          console.error("Error occured while getting item list");
+        });
   }
 
   return (

@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Blank Template",
+    "name": "Grocer",
     "slug": "Grocer",
     "privacy": "public",
     "sdkVersion": "36.0.0",
@@ -29,6 +29,7 @@
     "androidStatusBar": {
       "backgroundColor": "#FFFFFF",
       "barStyle": "dark-content"
-    }
+    },
+    "description": ""
   }
 }
