@@ -30,7 +30,7 @@ function GroceryItemSearchScreen({navigation, ...props}) {
         horizontal={false}
         numColumns={2}
         renderItem={({item}) => <GroceryItemListing
-          id={item._id}
+          _id={item._id}
           name={item.name}
           rating={item.rating}
           price={item.price}

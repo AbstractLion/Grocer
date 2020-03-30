@@ -39,7 +39,7 @@ function YourGroceryListScreen() {
               </View>
               <ListItem
                 leftAvatar={{source: {uri: item.imageUrl}}}
-                rightElement={<ItemCounter id={id}/>}
+                rightElement={<ItemCounter _id={_id}/>}
                 title={item.name}
                 bottomDivider={true}
                 containerStyle={styles.listItem}
