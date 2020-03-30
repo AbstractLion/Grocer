@@ -5,7 +5,7 @@ import GroceryListContext from "../contexts/GroceryList";
 
 export default function GroceryItemListing({
 	id,
-	title,
+	name,
 	imageUrl,
 	rating,
 	price
@@ -14,7 +14,7 @@ export default function GroceryItemListing({
 
 	return (
 			<Card
-				title={title}
+				title={name}
         titleStyle={{flexWrap: 'wrap'}}
 				containerStyle={styles.container}
 				imageProps={{
@@ -32,7 +32,7 @@ export default function GroceryItemListing({
           titleStyle={styles.price}
 					onPress={() => {
 						groceryList[id] = groceryList[id] || {
-							title,
+							name,
 							imageUrl,
 							price,
 							count: 0,

@@ -42,7 +42,7 @@ function GroceryItemSearchScreen({navigation, ...props}) {
         numColumns={2}
         renderItem={({item}) => <GroceryItemListing
           id={item.id}
-          title={item.title}
+          name={item.name}
           rating={item.rating}
           price={item.price}
           imageUrl={item.imageUrl}
