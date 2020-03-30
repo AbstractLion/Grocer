@@ -3,7 +3,7 @@ import {View, StyleSheet, Text} from 'react-native';
 import {Button, Input} from 'react-native-elements';
 import GroceryListContext from "../contexts/GroceryList";
 
-export default function ItemCounter({id}) {
+export default function ItemCounter({_id}) {
   const {groceryList, setGroceryList} = useContext(GroceryListContext);
 
   return (
@@ -12,28 +12,28 @@ export default function ItemCounter({id}) {
         icon={{name: 'minus', type: 'entypo'}}
         type='clear'
         onPress={() => {
-          const count = groceryList[id].count;
+          const count = groceryList[_id].count;
           if (count > 1) {
             const newItem = {
-              ...groceryList[id],
+              ...groceryList[_id],
               count: count - 1
             };
-            setGroceryList({...groceryList, [id]: newItem})
+            setGroceryList({...groceryList, [_id]: newItem})
           }
         }}
       />
-      <Text style={styles.count}>{groceryList[id].count ?? 0}</Text>
+      <Text style={styles.count}>{groceryList[_id].count ?? 0}</Text>
       <Button
         type="clear"
         icon={{name: 'plus', type: 'entypo'}}
         onPress={() => {
-          const count = groceryList[id].count;
+          const count = groceryList[_id].count;
           if (count < 9) {
             const newItem = {
-              ...groceryList[id],
+              ...groceryList[_id],
               count: count + 1
             };
-            setGroceryList({...groceryList, [id]: newItem});
+            setGroceryList({...groceryList, [_id]: newItem});
           }
         }}
       />

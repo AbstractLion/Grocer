@@ -3,6 +3,7 @@ import {FlatList, StyleSheet, View, SafeAreaView, Text, TouchableHighlight} from
 import StackWrapper from "../navigation/StackWrapper";
 import {ListItem} from "react-native-elements";
 import GroceryListContext from "../contexts/GroceryList";
+import UserContext from '../contexts/User';
 import ItemCounter from "../components/ItemCounter";
 import {SwipeRow} from 'react-native-swipe-list-view';
 import {Button} from 'react-native-elements';
@@ -10,6 +11,7 @@ import cuid from 'cuid';
 
 function YourGroceryListScreen() {
   const {groceryList, setGroceryList} = useContext(GroceryListContext);
+  const {user} = useContext(UserContext);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -20,7 +22,7 @@ function YourGroceryListScreen() {
             <Text style={{margin: 50, fontSize: 16}}>Your cart is empty!</Text>
           </View>
         }
-        renderItem={({item: [id, item]}) => {
+        renderItem={({item: [_id, item]}) => {
           return (
             <SwipeRow
               leftOpenValue={80}
@@ -29,7 +31,7 @@ function YourGroceryListScreen() {
                 <TouchableHighlight
                   onPress={() => {
                     let newList = {...groceryList};
-                    delete newList[id];
+                    delete newList[_id];
                     setGroceryList(newList);
                   }}
                 >
@@ -38,7 +40,7 @@ function YourGroceryListScreen() {
               </View>
               <ListItem
                 leftAvatar={{source: {uri: item.imageUrl}}}
-                rightElement={<ItemCounter id={id}/>}
+                rightElement={<ItemCounter _id={_id}/>}
                 title={item.title}
                 bottomDivider={true}
                 containerStyle={styles.listItem}
@@ -46,20 +48,20 @@ function YourGroceryListScreen() {
             </SwipeRow>
           );
         }}
-        keyExtractor={([id]) => id.toString()}
+        keyExtractor={([_id]) => _id.toString()}
       />
       <Button
         title="Submit Grocery List Request"
         disabled={Object.keys(groceryList).length === 0}
         onPress={() => {
-          fetch('https://grocer-app-flask.herokuapp.com/lists', {
+          fetch('https://grocerserver.herokuapp.com/lists', {
             method: 'POST',
             headers: {
               Accept: 'application/json',
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              author: "TODO",
+              author: user?.firstName + ' ' + user?.lastName,
               createdAt: Date.now(),
               qrCode: cuid(),
               items: groceryList,
