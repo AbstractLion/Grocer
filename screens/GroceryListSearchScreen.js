@@ -55,7 +55,7 @@ function GroceryListSearch({navigation}) {
             navigation.navigate("GroceryList", item);
           }}
         />}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item._id.toString()}
         contentContainerStyle={styles.listContainer}
       />
     </SafeAreaView>

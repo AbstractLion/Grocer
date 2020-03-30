@@ -23,7 +23,7 @@ export default function GroceryListScreen({navigation, route}) {
     let orderedItems = [];
     for (let [key, value] of Object.entries(route.params.items)) {
         let obj = value;
-        obj.id = key;
+        obj._id = key;
         orderedItems.push(obj);
     }
     return (
@@ -41,7 +41,7 @@ export default function GroceryListScreen({navigation, route}) {
                     </View>
 
                 )}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item._id}
             />
             <View
                 style={styles.qrStyle}

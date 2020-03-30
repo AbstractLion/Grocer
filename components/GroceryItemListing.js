@@ -4,7 +4,7 @@ import {Button, Card, Rating} from 'react-native-elements';
 import GroceryListContext from "../contexts/GroceryList";
 
 export default function GroceryItemListing({
-	id,
+	_id,
 	name,
 	imageUrl,
 	rating,
@@ -31,19 +31,19 @@ export default function GroceryItemListing({
 					title={`\$${price}`}
           titleStyle={styles.price}
 					onPress={() => {
-						groceryList[id] = groceryList[id] || {
+						groceryList[_id] = groceryList[_id] || {
 							name,
 							imageUrl,
 							price,
 							count: 0,
 						};
-						const count = groceryList[id].count;
+						const count = groceryList[_id].count;
 						if (count < 9) {
 							const newItem = {
-								...groceryList[id],
+								...groceryList[_id],
 								count: count + 1
 							};
-							setGroceryList({...groceryList, [id]: newItem});
+							setGroceryList({...groceryList, [_id]: newItem});
 						}
 					}}
 				/>

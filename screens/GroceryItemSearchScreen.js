@@ -8,30 +8,19 @@ function GroceryItemSearchScreen({navigation, ...props}) {
   const [searchValue, setSearchValue] = useState('');
   const [items, updateItems] = useState([]);
 
-  function search() {
-
-  }
-
-  function updateData() {
-    fetch('https://grocer-app-flask.herokuapp.com/items')
-        .then((response) => response.json())
-        .then((json) => {
-          updateItems(json.data);
-        })
-        .catch((error) => {
-          console.error("Error occured while getting item list");
-        });
-  }
-
   useEffect(() => {
-    updateData();
-  }, []);
-  
+    (async () => {
+      const response = await fetch(`https://grocerserver.herokuapp.com/items?filter=${searchValue}`);
+      const result = await response.json();
+      updateItems(result);
+    })();
+  }, [searchValue]);
+
   return (
     <SafeAreaView style={styles.container}>
       <SearchBar
         placeholder="Search..."
-        onChangeText={search}
+        onChangeText={(text) => setSearchValue(text)}
         value={searchValue}
         platform="ios"
         containerStyle={{backgroundColor: 'white'}}
@@ -41,13 +30,13 @@ function GroceryItemSearchScreen({navigation, ...props}) {
         horizontal={false}
         numColumns={2}
         renderItem={({item}) => <GroceryItemListing
-          id={item.id}
+          id={item._id}
           name={item.name}
           rating={item.rating}
           price={item.price}
           imageUrl={item.imageUrl}
         />}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item._id.toString()}
         contentContainerStyle={styles.listContainer}
       />
     </SafeAreaView>
