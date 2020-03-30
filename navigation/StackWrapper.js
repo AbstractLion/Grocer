@@ -1,7 +1,7 @@
-import React, {useContext} from "react";
+import React, {useContext, useCallback, useState} from "react";
 import {createStackNavigator} from "@react-navigation/stack";
 import {Icon} from "react-native-elements";
-import {useNavigation, DrawerActions} from '@react-navigation/native';
+import {useFocusEffect, useNavigation, DrawerActions, StackActions} from '@react-navigation/native';
 import LocationContext from "../contexts/Location";
 import StoreSelectionScreen from "../screens/StoreSelectionScreen";
 import StackWrapperScreenOptions from "../constants/StackWrapperScreenOptions";
@@ -47,12 +47,13 @@ export default function(component, options = {}) {
         screenOptions={StackWrapperScreenOptions}
       >
         <Stack.Screen
-          component={component}
           name={props.route.name}
+          component={component}
           options={{
             title: location,
             ...options
           }}
+
         />
         <Stack.Screen
           component={StoreSelectionScreen}

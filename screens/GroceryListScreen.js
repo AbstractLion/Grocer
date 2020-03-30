@@ -2,8 +2,11 @@ import React, {useEffect} from 'react';
 import {View, Text, FlatList, Image, StyleSheet} from 'react-native';
 import SvgQRCode from 'react-native-qrcode-svg';
 import {Icon, ListItem, Rating} from "react-native-elements";
+import StackWrapperScreenOptions from "../constants/StackWrapperScreenOptions";
 
 export default function GroceryListScreen({navigation, route}) {
+
+
     useEffect(() => {
         navigation.dangerouslyGetParent()?.setOptions({
             headerLeft: () => <Icon
@@ -13,7 +16,8 @@ export default function GroceryListScreen({navigation, route}) {
                 onPress={() => {
                     navigation.goBack();
                 }}
-            />
+            />,
+          title: route.params.author
         });
     }, []);
     let orderedItems = [];
@@ -22,7 +26,6 @@ export default function GroceryListScreen({navigation, route}) {
         obj.id = key;
         orderedItems.push(obj);
     }
-    navigation.dangerouslyGetParent().setOptions({title: route.params.author});
     return (
         <View style={{flex: 1}}>
             <FlatList

@@ -7,15 +7,10 @@ import {createStackNavigator} from "@react-navigation/stack";
 import StackWrapperScreenOptions from "../constants/StackWrapperScreenOptions";
 import dateFormat from 'dateformat';
 import cuid from "cuid";
+import {useFocusEffect} from "@react-navigation/core";
 
 function GroceryListSearch({navigation}) {
   const [searchValue, setSearchValue] = useState('');
-
-  useEffect(() => {
-    navigation.addListener('focus', () => {
-      navigation.dangerouslyGetParent()?.setOptions(StackWrapperScreenOptions);
-    });
-  }, [navigation]);
 
   const groceryLists = [
     {
@@ -92,7 +87,7 @@ const styles = StyleSheet.create({
 
 const Stack = createStackNavigator();
 
-function GroceryListSearchScreen() {
+function GroceryListSearchScreen({navigation, route}) {
   return (
     <Stack.Navigator
       screenOptions={{
