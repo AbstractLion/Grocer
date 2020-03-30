@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {Dimensions, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {Button, Card, Rating} from 'react-native-elements';
 import GroceryListContext from "../contexts/GroceryList";
 
@@ -16,10 +16,8 @@ export default function GroceryItemListing({
 			<Card
 				title={name}
         titleStyle={{flexWrap: 'wrap'}}
-				containerStyle={styles.container}
-				imageProps={{
-					resizeMode: 'contain'
-				}}
+				containerStyle={styles.cardContainer}
+				imageProps={{resizeMode: 'contain'}}
 				image={{uri: imageUrl}}
 			>
 				<Rating
@@ -52,8 +50,8 @@ export default function GroceryItemListing({
 }
 
 const styles = StyleSheet.create({
-  container: {
-		flexGrow: 1
+  cardContainer: {
+  	width: Dimensions.get('window').width / 2 - 30
 	},
 	price: {
 		fontWeight: "bold"

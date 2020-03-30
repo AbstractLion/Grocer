@@ -59,7 +59,6 @@ function YourGroceryListScreen() {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              id: Math.floor(Math.random()*10000000000000000),
               author: "TODO",
               createdAt: Date.now(),
               qrCode: cuid(),
