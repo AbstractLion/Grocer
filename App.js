@@ -43,7 +43,7 @@ function DrawerContent(props) {
 }
 
 export default function App() {
-  const [store, setStore] = useState({name: "Walmart", id: 0});
+  const [currentStore, setCurrentStore] = useState({name: "Walmart", id: 0});
   const [groceryList, setGroceryList] = useState({});
   const [user, setUser] = useState({});
 
@@ -53,7 +53,7 @@ export default function App() {
   }, []);
 
   return (
-    <CurrentStoreContext.Provider value={{store, setStore}}>
+    <CurrentStoreContext.Provider value={{currentStore, setCurrentStore}}>
       <GroceryListContext.Provider value={{groceryList, setGroceryList}}>
         <UserContext.Provider value={{user, setUser}}>
           <NavigationContainer ref={navigationRef}>

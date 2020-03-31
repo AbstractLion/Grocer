@@ -38,7 +38,7 @@ function ConfirmIcon() {
 
 export default function(component, options = {}) {
   return function(props) {
-    const {store} = useContext(CurrentStoreContext);
+    const {currentStore} = useContext(CurrentStoreContext);
 
     return (
       <Stack.Navigator

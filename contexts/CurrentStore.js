@@ -1,8 +1,8 @@
 import React from 'react';
 
 const CurrentStoreContext = React.createContext({
-  store: '',
-  setStore: () => {}
+  currentStore: {},
+  setCurrentStore: () => {}
 });
 
 export default CurrentStoreContext;

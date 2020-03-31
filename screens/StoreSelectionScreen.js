@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import {View, Dimensions, StyleSheet, FlatList, Text, Button} from 'react-native';
 import MapView, {Marker, Callout} from 'react-native-maps';
 import { useNavigation } from '@react-navigation/native';
-import CurrentCurrentStoreContext from '../contexts/CurrentStore';
+import CurrentStoreContext from '../contexts/CurrentStore';
 
 const storeLocations = [
   {
@@ -65,7 +65,7 @@ const storeLocations = [
 
 export default function StoreSelectionScreen() {
   const navigation = useNavigation();
-  const {store, setStore} = useContext(CurrentStoreContext);
+  const {currentStore, setCurrentStore} = useContext(CurrentStoreContext);
 
   return (
   <View>
@@ -89,7 +89,7 @@ export default function StoreSelectionScreen() {
             <Callout style={styles.callout}
               onPress={() => {
               navigation.setOptions({ title: store.name });
-              setStore({name: store.name, id: store.id})
+              setCurrentStore({name: store.name, id: store.id})
             }}>
               <Text style={styles.calloutText}>{store.name}{'\n'}</Text>
               <Button

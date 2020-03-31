@@ -13,7 +13,7 @@ import cuid from 'cuid';
 function YourGroceryListScreen() {
   const {groceryList, setGroceryList} = useContext(GroceryListContext);
   const {user} = useContext(UserContext);
-  const {store} = useContext(CurrentStoreContext);
+  const {currentStore} = useContext(CurrentStoreContext);
 
   return (
     <SafeAreaView style={styles.container}>

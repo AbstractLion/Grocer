@@ -10,10 +10,10 @@ function GroceryItemSearchScreen({navigation, ...props}) {
   const [searchValue, setSearchValue] = useState('');
   const [items, updateItems] = useState([]);
   const [endReached, setEndReached] = useState(false);
-  const {store} = useContext(CurrentStoreContext);
+  const {currentStore} = useContext(CurrentStoreContext);
 
   async function fetchData() {
-    const response = await fetch(`https://grocerserver.herokuapp.com/items?storeId=${store.id}&filter=${searchValue}&skip=${skipValue}&first=16`);
+    const response = await fetch(`https://grocerserver.herokuapp.com/items?storeId=${currentStore.id}&filter=${searchValue}&skip=${skipValue}&first=16`);
     const result = await response.json();
     setEndReached(result.length < 16);
     updateItems([...items, ...result]);
