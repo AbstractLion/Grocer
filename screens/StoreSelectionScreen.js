@@ -46,6 +46,13 @@ const storeLocations = [
       longitude: -79.7213554,
     }
   },
+  {
+    name: "Metro Warden Ave",
+    coords: {
+      latitude: 43.797456,
+      longitude: -79.3200992,
+    }
+  },
 ];
 
 export default function StoreSelectionScreen() {
