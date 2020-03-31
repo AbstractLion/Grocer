@@ -5,7 +5,7 @@ import GroceryListSearchScreen from './screens/GroceryListSearchScreen';
 import YourGroceryListScreen from './screens/YourGroceryListScreen';
 import {NavigationContainer, DrawerActions} from "@react-navigation/native";
 import {navigationRef, isMountedRef} from "./navigation/RootNavigation";
-import LocationContext from "./contexts/Store";
+import CurrentStoreContext from "./contexts/CurrentStore";
 import GroceryListContext from "./contexts/GroceryList";
 import UserContext from "./contexts/User";
 import ScannerScreen from "./screens/ScannerScreen";
@@ -53,7 +53,7 @@ export default function App() {
   }, []);
 
   return (
-    <LocationContext.Provider value={{store, setStore}}>
+    <CurrentStoreContext.Provider value={{store, setStore}}>
       <GroceryListContext.Provider value={{groceryList, setGroceryList}}>
         <UserContext.Provider value={{user, setUser}}>
           <NavigationContainer ref={navigationRef}>
@@ -90,6 +90,6 @@ export default function App() {
           </NavigationContainer>
         </UserContext.Provider>
       </GroceryListContext.Provider>
-    </LocationContext.Provider>
+    </CurrentStoreContext.Provider>
   );
 }

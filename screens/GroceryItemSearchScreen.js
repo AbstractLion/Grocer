@@ -3,29 +3,44 @@ import {StyleSheet, View, SafeAreaView, FlatList, Text, ActivityIndicator} from 
 import {SearchBar} from 'react-native-elements';
 import GroceryItemListing from '../components/GroceryItemListing';
 import StackWrapper from "../navigation/StackWrapper";
-import StoreContext from "../contexts/Store";
+import CurrentStoreContext from "../contexts/CurrentStore";
 
 function GroceryItemSearchScreen({navigation, ...props}) {
   const [skipValue, setSkipValue] = useState(0);
   const [searchValue, setSearchValue] = useState('');
   const [items, updateItems] = useState([]);
   const [endReached, setEndReached] = useState(false);
-  const {store} = useContext(StoreContext);
+  const {store} = useContext(CurrentStoreContext);
+
+  async function fetchData() {
+    const response = await fetch(`https://grocerserver.herokuapp.com/items?storeId=${store.id}&filter=${searchValue}&skip=${skipValue}&first=16`);
+    const result = await response.json();
+    setEndReached(result.length < 16);
+    updateItems([...items, ...result]);
+  }
 
   useEffect(() => {
     (async () => {
-      const response = await fetch(`https://grocerserver.herokuapp.com/items?storeId=${store.id}&filter=${searchValue}&skip=${skipValue}&first=15`);
-      const result = await response.json();
-      setEndReached(result.length < 15);
-      updateItems([...items, ...result]);
+      await fetchData();
     })();
-  }, [searchValue, store.id, skipValue]);
+  }, [searchValue, skipValue]);
+
+  function search(text) {
+    const searchVal = text;
+    setSearchValue(text);
+    setTimeout(async () => {
+      if (searchVal === searchValue) {
+        console.log('test');
+        await fetchData();
+      }
+    }, 1000);
+  }
 
   return (
     <SafeAreaView style={styles.container}>
       <SearchBar
         placeholder="Search..."
-        onChangeText={(text) => setSearchValue(text)}
+        onChangeText={(text) => search(text)}
         value={searchValue}
         platform="ios"
         containerStyle={{backgroundColor: 'white'}}
@@ -44,12 +59,12 @@ function GroceryItemSearchScreen({navigation, ...props}) {
         keyExtractor={(item) => item._id.toString()}
         contentContainerStyle={styles.listContainer}
         onEndReached={() => {
-          setSkipValue(skipValue + 15);
+          setSkipValue(skipValue + 16);
         }}
-        onEndReachedThreshold={0.5}
-        initialNumToRender={15}
+        onEndReachedThreshold={0.1}
+        initialNumToRender={16}
+        ListFooterComponent={endReached ? <ActivityIndicator /> : null}
       />
-      {endReached ? <ActivityIndicator /> : null}
     </SafeAreaView>
   );
 }

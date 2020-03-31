@@ -4,7 +4,7 @@ import StackWrapper from "../navigation/StackWrapper";
 import {ListItem} from "react-native-elements";
 import GroceryListContext from "../contexts/GroceryList";
 import UserContext from '../contexts/User';
-import StoreContext from "../contexts/Store";
+import CurrentStoreContext from "../contexts/CurrentStore";
 import ItemCounter from "../components/ItemCounter";
 import {SwipeRow} from 'react-native-swipe-list-view';
 import {Button} from 'react-native-elements';
@@ -13,7 +13,7 @@ import cuid from 'cuid';
 function YourGroceryListScreen() {
   const {groceryList, setGroceryList} = useContext(GroceryListContext);
   const {user} = useContext(UserContext);
-  const {store} = useContext(StoreContext);
+  const {store} = useContext(CurrentStoreContext);
 
   return (
     <SafeAreaView style={styles.container}>

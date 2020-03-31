@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import {View, Dimensions, StyleSheet, FlatList, Text, Button} from 'react-native';
 import MapView, {Marker, Callout} from 'react-native-maps';
 import { useNavigation } from '@react-navigation/native';
-import StoreContext from '../contexts/Store';
+import CurrentCurrentStoreContext from '../contexts/CurrentStore';
 
 const storeLocations = [
   {
@@ -65,7 +65,7 @@ const storeLocations = [
 
 export default function StoreSelectionScreen() {
   const navigation = useNavigation();
-  const {store, setStore} = useContext(StoreContext);
+  const {store, setStore} = useContext(CurrentStoreContext);
 
   return (
   <View>

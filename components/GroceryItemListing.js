@@ -3,7 +3,7 @@ import {Dimensions, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {Button, Card, Rating} from 'react-native-elements';
 import GroceryListContext from "../contexts/GroceryList";
 
-export default function GroceryItemListing({
+export default React.memo(function GroceryItemListing({
 	_id,
 	name,
 	imageUrl,
@@ -47,7 +47,7 @@ export default function GroceryItemListing({
 				/>
 			</Card>
 	)
-}
+});
 
 const styles = StyleSheet.create({
   cardContainer: {
