@@ -66,7 +66,7 @@ const storeLocations = [
 export default function StoreSelectionScreen() {
   const navigation = useNavigation();
   const {currentStore, setCurrentStore} = useContext(CurrentStoreContext);
-
+  console.log(currentStore);
   return (
   <View>
     <MapView
@@ -88,13 +88,11 @@ export default function StoreSelectionScreen() {
           >
             <Callout style={styles.callout}
               onPress={() => {
-              navigation.setOptions({ title: store.name });
-              setCurrentStore({name: store.name, id: store.id})
-            }}>
+                setCurrentStore({name: store.name, id: store.id});
+                navigation.setOptions({ title: store.name });
+              }}>
               <Text style={styles.calloutText}>{store.name}{'\n'}</Text>
-              <Button
-                title="Select"
-              />
+              <Button title={currentStore.name !== store.name ? "Select" : "Selected"} color={currentStore.name !== store.name ? "#0099ff": "#666666"}/>
             </Callout>
           </Marker>
         )
@@ -114,5 +112,5 @@ const styles = new StyleSheet.create({
   },
   callout: {
     padding: 10
-  }
+  },
 });
