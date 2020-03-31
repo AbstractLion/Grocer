@@ -64,7 +64,7 @@ function YourGroceryListScreen() {
             },
             body: JSON.stringify({
               author: user?.firstName + ' ' + user?.lastName,
-              storeId: store.id,
+              storeId: currentStore.id,
               createdAt: Date.now(),
               qrCode: cuid(),
               items: groceryList,
