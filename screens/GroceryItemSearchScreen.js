@@ -63,7 +63,7 @@ function GroceryItemSearchScreen({navigation, ...props}) {
         }}
         onEndReachedThreshold={0.1}
         initialNumToRender={16}
-        ListFooterComponent={endReached ? <ActivityIndicator /> : null}
+        ListFooterComponent={endReached ? null : <ActivityIndicator size="large"/>}
       />
     </SafeAreaView>
   );
