@@ -8,7 +8,6 @@ export default React.memo(function GroceryItemListing({
 	_id, name, imageUrl, rating, price
 }) {
   const {groceryList, setGroceryList} = useContext(GroceryListContext);
-
 	return (
 		<Card
 			title={name}
@@ -25,7 +24,7 @@ export default React.memo(function GroceryItemListing({
 				style={{margin: 10}}
 			/>
 			<Button
-				title={`\$${price}`}
+				title={`\$${price.toFixed(2)}`}
 				titleStyle={styles.price}
 				onPress={() => {
 					groceryList[_id] = groceryList[_id] || {
