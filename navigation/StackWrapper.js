@@ -50,7 +50,7 @@ export default function(component, options = {}) {
           name={props.route.name}
           component={component}
           options={{
-            title: store.name,
+            title: currentStore.name,
             ...options
           }}
 

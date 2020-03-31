@@ -5,8 +5,6 @@ import {Icon, ListItem, Rating} from "react-native-elements";
 import StackWrapperScreenOptions from "../constants/StackWrapperScreenOptions";
 
 export default function GroceryListScreen({navigation, route}) {
-
-
     useEffect(() => {
         navigation.dangerouslyGetParent()?.setOptions({
             headerLeft: () => <Icon
