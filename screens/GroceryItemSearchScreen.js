@@ -1,20 +1,25 @@
 import React, {useState, useContext, useEffect} from 'react';
-import {StyleSheet, View, SafeAreaView, FlatList, Text} from 'react-native';
+import {StyleSheet, View, SafeAreaView, FlatList, Text, ActivityIndicator} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 import GroceryItemListing from '../components/GroceryItemListing';
 import StackWrapper from "../navigation/StackWrapper";
+import StoreContext from "../contexts/Store";
 
 function GroceryItemSearchScreen({navigation, ...props}) {
+  const [skipValue, setSkipValue] = useState(0);
   const [searchValue, setSearchValue] = useState('');
   const [items, updateItems] = useState([]);
+  const [endReached, setEndReached] = useState(false);
+  const {store} = useContext(StoreContext);
 
   useEffect(() => {
     (async () => {
-      const response = await fetch(`https://grocerserver.herokuapp.com/items?filter=${searchValue}`);
+      const response = await fetch(`https://grocerserver.herokuapp.com/items?storeId=${store.id}&filter=${searchValue}&skip=${skipValue}&first=15`);
       const result = await response.json();
-      updateItems(result);
+      setEndReached(result.length < 15);
+      updateItems([...items, ...result]);
     })();
-  }, [searchValue]);
+  }, [searchValue, store.id, skipValue]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -38,7 +43,13 @@ function GroceryItemSearchScreen({navigation, ...props}) {
         />}
         keyExtractor={(item) => item._id.toString()}
         contentContainerStyle={styles.listContainer}
+        onEndReached={() => {
+          setSkipValue(skipValue + 15);
+        }}
+        onEndReachedThreshold={0.5}
+        initialNumToRender={15}
       />
+      {endReached ? <ActivityIndicator /> : null}
     </SafeAreaView>
   );
 }

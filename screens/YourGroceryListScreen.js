@@ -4,6 +4,7 @@ import StackWrapper from "../navigation/StackWrapper";
 import {ListItem} from "react-native-elements";
 import GroceryListContext from "../contexts/GroceryList";
 import UserContext from '../contexts/User';
+import StoreContext from "../contexts/Store";
 import ItemCounter from "../components/ItemCounter";
 import {SwipeRow} from 'react-native-swipe-list-view';
 import {Button} from 'react-native-elements';
@@ -11,7 +12,9 @@ import cuid from 'cuid';
 
 function YourGroceryListScreen() {
   const {groceryList, setGroceryList} = useContext(GroceryListContext);
-  console.log(groceryList);
+  const {user} = useContext(UserContext);
+  const {store} = useContext(StoreContext);
+
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
@@ -52,8 +55,8 @@ function YourGroceryListScreen() {
       <Button
         title="Submit Grocery List Request"
         disabled={Object.keys(groceryList).length === 0}
-        onPress={() => {
-          fetch('https://grocerserver.herokuapp.com/lists', {
+        onPress={async () => {
+          const response = await fetch('https://grocerserver.herokuapp.com/lists', {
             method: 'POST',
             headers: {
               Accept: 'application/json',
@@ -61,11 +64,14 @@ function YourGroceryListScreen() {
             },
             body: JSON.stringify({
               author: user?.firstName + ' ' + user?.lastName,
+              storeId: store.id,
               createdAt: Date.now(),
               qrCode: cuid(),
               items: groceryList,
             }),
           });
+          const result = await response.json();
+          console.log(result);
         }}
         containerStyle={{
           width: '80%',

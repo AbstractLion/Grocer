@@ -2,7 +2,7 @@ import React, {useContext, useCallback, useState} from "react";
 import {createStackNavigator} from "@react-navigation/stack";
 import {Icon} from "react-native-elements";
 import {useFocusEffect, useNavigation, DrawerActions, StackActions} from '@react-navigation/native';
-import LocationContext from "../contexts/Location";
+import StoreContext from "../contexts/Store";
 import StoreSelectionScreen from "../screens/StoreSelectionScreen";
 import StackWrapperScreenOptions from "../constants/StackWrapperScreenOptions";
 
@@ -38,7 +38,7 @@ function ConfirmIcon() {
 
 export default function(component, options = {}) {
   return function(props) {
-    const {location} = useContext(LocationContext);
+    const {store} = useContext(StoreContext);
 
     return (
       <Stack.Navigator
@@ -50,7 +50,7 @@ export default function(component, options = {}) {
           name={props.route.name}
           component={component}
           options={{
-            title: location,
+            title: store.name,
             ...options
           }}
 
