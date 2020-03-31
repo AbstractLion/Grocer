@@ -17,6 +17,7 @@ export default React.memo(function GroceryItemListing({
 				title={name}
         titleStyle={{flexWrap: 'wrap'}}
 				containerStyle={styles.cardContainer}
+        wrapperStyle={styles.cardWrapper}
 				imageProps={{resizeMode: 'contain'}}
 				image={{uri: imageUrl}}
 			>
@@ -24,6 +25,7 @@ export default React.memo(function GroceryItemListing({
 					imageSize={20}
 					readonly
 					startingValue={rating}
+          style={{margin: 10}}
 				/>
 				<Button
 					title={`\$${price}`}
@@ -51,7 +53,15 @@ export default React.memo(function GroceryItemListing({
 
 const styles = StyleSheet.create({
   cardContainer: {
-  	width: Dimensions.get('window').width / 2 - 30
+  	width: Dimensions.get('window').width / 2 - 30,
+		flex: -1,
+		flexDirection: 'column'
+	},
+	cardWrapper: {
+		flex: -1,
+		flexDirection: 'column',
+		justifyContent: 'flex-end',
+		flexGrow: 1
 	},
 	price: {
 		fontWeight: "bold"
