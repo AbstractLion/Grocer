@@ -56,10 +56,7 @@ export default function App() {
       if (pushToken) return;
 
       const {status} = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-      if (status !== 'granted') {
-        alert('No notification permissions!');
-        return;
-      }
+      if (status !== 'granted') return;
       let token = await Notifications.getExpoPushTokenAsync();
       await SecureStore.setItemAsync('pushToken', token);
     })();
