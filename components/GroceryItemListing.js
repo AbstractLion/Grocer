@@ -11,7 +11,7 @@ export default React.memo(function GroceryItemListing({
 
 	return (
 		<Card
-			title={<Text style={{fontSize: 16}}>{name}</Text>}
+			title={name}
 			titleStyle={{flexWrap: 'wrap'}}
 			containerStyle={styles.cardContainer}
 			wrapperStyle={styles.cardWrapper}
