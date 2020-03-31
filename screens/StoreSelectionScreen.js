@@ -26,7 +26,6 @@ const storeLocations = [
 export default function StoreSelectionScreen() {
   const navigation = useNavigation();
   const {currentStore, setCurrentStore} = useContext(CurrentStoreContext);
-  console.log(currentStore);
   return (
   <View>
     <MapView

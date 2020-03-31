@@ -34,6 +34,7 @@ function GroceryItemSearchScreen({navigation, ...props}) {
 
   useEffect(() => {
     (async () => {
+      console.log(currentStore);
       setLoading(true);
       const result = await fetchData(searchValue, 0);
       setSkipValue(0);

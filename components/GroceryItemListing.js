@@ -3,7 +3,6 @@ import {Text, Dimensions, StyleSheet, TouchableOpacity} from 'react-native';
 import {Button, Card, Rating} from 'react-native-elements';
 import GroceryListContext from "../contexts/GroceryList";
 
-
 export default React.memo(function GroceryItemListing({
 	_id, name, imageUrl, rating, price
 }) {
