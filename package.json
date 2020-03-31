@@ -3,6 +3,7 @@
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
+    "push": "git add .; git commit -m 'made changes'; git push",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject"
