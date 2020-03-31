@@ -8,7 +8,7 @@ import {createStackNavigator} from "@react-navigation/stack";
 import GroceryItemOrderScreen from "./GroceryItemOrderScreen";
 import useDidUpdate from "../hooks/useDidUpdate";
 
-function GroceryItemSearchScreen({navigation, ...props}) {
+function GroceryItemSearch({navigation, ...props}) {
   const [loading, setLoading] = useState(true);
   const [skipValue, setSkipValue] = useState(0);
   const [searchValue, setSearchValue] = useState('');
