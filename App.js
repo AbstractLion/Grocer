@@ -14,6 +14,8 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from "@react-navigation/drawer";
+import {Notifications} from 'expo';
+import * as Permissions from 'expo-permissions';
 
 const Drawer = createDrawerNavigator();
 
