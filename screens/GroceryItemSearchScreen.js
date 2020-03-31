@@ -4,6 +4,8 @@ import {SearchBar} from 'react-native-elements';
 import GroceryItemListing from '../components/GroceryItemListing';
 import StackWrapper from "../navigation/StackWrapper";
 import CurrentStoreContext from "../contexts/CurrentStore";
+import {createStackNavigator} from "@react-navigation/stack";
+import GroceryItemOrderScreen from "./GroceryItemOrderScreen";
 import useDidUpdate from "../hooks/useDidUpdate";
 
 function GroceryItemSearchScreen({navigation, ...props}) {
@@ -62,6 +64,7 @@ function GroceryItemSearchScreen({navigation, ...props}) {
         platform="ios"
         containerStyle={{backgroundColor: 'white'}}
       />
+
       {loading ? <ActivityIndicator size="large"/> :
         <FlatList
           data={items}
@@ -87,6 +90,18 @@ function GroceryItemSearchScreen({navigation, ...props}) {
     </SafeAreaView>
   );
 }
+
+const Stack = createStackNavigator();
+
+function GroceryItemSearchScreen() {
+  return (
+    <Stack.Navigator type={"modal"} screenOptions={{headerShown:false}}>
+      <Stack.Screen component={GroceryItemSearch} name={"GroceryItemSearch"}/>
+      <Stack.Screen component={GroceryItemOrderScreen} name={"GroceryItemScreen"}/>
+    </Stack.Navigator>
+  )
+}
+
 
 const styles = StyleSheet.create({
   container: {

@@ -2,11 +2,13 @@ import React, {useContext} from 'react';
 import {Text, Dimensions, StyleSheet, TouchableOpacity} from 'react-native';
 import {Button, Card, Rating} from 'react-native-elements';
 import GroceryListContext from "../contexts/GroceryList";
+import {useNavigation} from '@react-navigation/native';
 
 export default React.memo(function GroceryItemListing({
 	_id, name, imageUrl, rating, price
 }) {
   const {groceryList, setGroceryList} = useContext(GroceryListContext);
+  const navigation = useNavigation();
 	return (
 		<Card
 			title={name}
@@ -26,6 +28,8 @@ export default React.memo(function GroceryItemListing({
 				title={`\$${price.toFixed(2)}`}
 				titleStyle={styles.price}
 				onPress={() => {
+					navigation.navigate("GroceryItemScreen", {_id, rating, name, imageUrl, price});
+					/*
 					groceryList[_id] = groceryList[_id] || {
 						name,
 						imageUrl,
@@ -40,6 +44,7 @@ export default React.memo(function GroceryItemListing({
 						};
 						setGroceryList({...groceryList, [_id]: newItem});
 					}
+					*/
 				}}
 			/>
 		</Card>
