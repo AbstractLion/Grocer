@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import {View, Dimensions, StyleSheet, FlatList, Text, Button} from 'react-native';
 import MapView, {Marker, Callout} from 'react-native-maps';
 import { useNavigation } from '@react-navigation/native';
@@ -43,7 +43,6 @@ export default function StoreSelectionScreen() {
               key={store.name}
               title={store.name}
               coordinate={store.coords}
-
           >
             <Callout style={styles.callout}
               onPress={() => {
@@ -51,7 +50,7 @@ export default function StoreSelectionScreen() {
                 navigation.setOptions({ title: store.name });
               }}>
               <Text style={styles.calloutText}>{store.name}{'\n'}</Text>
-              <Button title={currentStore.name !== store.name ? "Select" : "Selected"} color={currentStore.name !== store.name ? "#0099ff": "#666666"}/>
+              <Button title={currentStore.name === store.name ? "Selected" : "Select"} disabled={currentStore.name === store.name}/>
             </Callout>
           </Marker>
         )
