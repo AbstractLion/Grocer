@@ -21,6 +21,7 @@ function ProfileScreen() {
       <Button
         title="Create User"
         onPress={async () => {
+          const pushToken = await SecureStore.getItemAsync('pushToken');
           const response = await fetch('https://grocerserver.herokuapp.com/users', {
             method: 'post',
             headers: {
@@ -33,7 +34,7 @@ function ProfileScreen() {
               firstName: 'John',
               lastName: 'Doe',
               role: 'Worker',
-              pushToken: await SecureStore.getItemAsync('pushToken')
+              pushToken
             })
           });
           const result = await response.json();
