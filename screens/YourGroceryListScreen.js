@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {FlatList, StyleSheet, View, SafeAreaView, Text, TouchableHighlight} from 'react-native';
 import StackWrapper from "../navigation/StackWrapper";
 import {ListItem} from "react-native-elements";
@@ -14,6 +14,7 @@ function YourGroceryListScreen() {
   const {groceryList, setGroceryList} = useContext(GroceryListContext);
   const {user} = useContext(UserContext);
   const {currentStore} = useContext(CurrentStoreContext);
+  const [loading, setLoading] = useState(false);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -53,9 +54,11 @@ function YourGroceryListScreen() {
         keyExtractor={([_id]) => _id.toString()}
       />
       <Button
+        loading={loading}
         title="Submit Grocery List Request"
         disabled={Object.keys(groceryList).length === 0}
         onPress={async () => {
+          setLoading(true);
           const response = await fetch('https://grocerserver.herokuapp.com/lists', {
             method: 'POST',
             headers: {
@@ -70,6 +73,7 @@ function YourGroceryListScreen() {
               items: groceryList,
             }),
           });
+          setLoading(false);
           const result = await response.json();
           console.log(result);
         }}

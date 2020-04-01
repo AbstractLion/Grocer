@@ -17,6 +17,7 @@ import {
 import {Notifications} from 'expo';
 import * as Permissions from 'expo-permissions';
 import * as SecureStore from 'expo-secure-store';
+import ProfileScreen from "./screens/ProfileScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -55,8 +56,11 @@ export default function App() {
       const pushToken = await SecureStore.getItemAsync('pushToken');
       if (pushToken) return;
 
-      const {status} = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-      if (status !== 'granted') return;
+      const result = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      if (result.status !== 'granted') {
+        alert(JSON.stringify(result));
+        return;
+      }
       let token = await Notifications.getExpoPushTokenAsync();
       await SecureStore.setItemAsync('pushToken', token);
     })();
@@ -100,6 +104,13 @@ export default function App() {
                   title: "Scan QR Code"
                 }}
                 component={ScannerScreen}
+              />
+              <Drawer.Screen
+                name="Profile"
+                options={{
+                  title: "Your Profile"
+                }}
+                component={ProfileScreen}
               />
             </Drawer.Navigator>
           </NavigationContainer>
