@@ -52,7 +52,7 @@ export default function GroceryItemScreen({navigation, route}) {
             if (count < 9) {
               const newItem = {
                 ...groceryList[route.params._id],
-                count: count + 1
+                count: count + itemQuantity
               };
               setGroceryList({...groceryList, [route.params._id]: newItem});
             }
