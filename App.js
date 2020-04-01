@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {Text, View} from 'react-native';
 import GroceryItemSearchScreen from './screens/GroceryItemSearchScreen';
 import GroceryListSearchScreen from './screens/GroceryListSearchScreen';
@@ -31,15 +31,15 @@ const userInfo = {
 };
 
 function DrawerContent(props) {
+  const {user, setUser} = useContext(UserContext);
+
   return(
     <DrawerContentScrollView {...props}>
       <View style={{flex: 1, padding: 15}}>
-        <Text style={{fontWeight: "bold", fontSize: 25}}>{userInfo.name}</Text>
-        <Text>{userInfo.email}</Text>
-        <Text>{userInfo.phone}</Text>
-        <Text>Timeout: {userInfo.timeout}</Text>
-        <Text>Role: {userInfo.role}</Text>
-        <Text>Description: {userInfo.description}</Text>
+        <Text style={{fontWeight: "bold", fontSize: 25}}>{user.firstName + ' ' + user.lastName}</Text>
+        <Text>{user.email}</Text>
+        <Text>{user.phone}</Text>
+        <Text>Role: {user.role}</Text>
       </View>
       <DrawerItemList {...props} />
     </DrawerContentScrollView>
@@ -58,11 +58,20 @@ export default function App() {
 
       const result = await Permissions.askAsync(Permissions.NOTIFICATIONS);
       if (result.status !== 'granted') {
-        alert(JSON.stringify(result));
         return;
       }
       let token = await Notifications.getExpoPushTokenAsync();
       await SecureStore.setItemAsync('pushToken', token);
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async() => {
+      const id = await SecureStore.getItemAsync('userId');
+      if (!id) return;
+      const response = await fetch(`https://grocerserver.herokuapp.com/users/${id}`);
+      const result = await response.json();
+      console.log(result);
     })();
   }, []);
 
