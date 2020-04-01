@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {Text, View} from 'react-native';
+import {Platform, Text, View} from 'react-native';
 import GroceryItemSearchScreen from './screens/GroceryItemSearchScreen';
 import GroceryListSearchScreen from './screens/GroceryListSearchScreen';
 import YourGroceryListScreen from './screens/YourGroceryListScreen';
@@ -50,6 +50,18 @@ export default function App() {
   const [currentStore, setCurrentStore] = useState({name: "Walmart", id: 0});
   const [groceryList, setGroceryList] = useState({});
   const [user, setUser] = useState({});
+
+  useEffect(() => {
+    (async() => {
+      if (Platform.OS === 'android') {
+        await Notifications.createChannelAndroidAsync('notifications', {
+          name: 'Notifications',
+          vibrate: [250],
+          sound: true,
+        });
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     (async() => {

@@ -19,7 +19,7 @@ function ProfileScreen() {
     <View>
       <Text>{pushToken}</Text>
       <Button
-        title="Create User"
+        title="Create Shopper"
         onPress={async () => {
           const pushToken = await SecureStore.getItemAsync('pushToken');
           const response = await fetch('https://grocerserver.herokuapp.com/users', {
@@ -33,7 +33,7 @@ function ProfileScreen() {
               email: 'john.doe@gmail.com',
               firstName: 'John',
               lastName: 'Doe',
-              role: 'Worker',
+              role: 'Shopper',
               pushToken
             })
           });
@@ -44,7 +44,7 @@ function ProfileScreen() {
         }}
       />
       <Button
-        title="Login"
+        title="Create Worker"
         onPress={() => {
         }}
       />

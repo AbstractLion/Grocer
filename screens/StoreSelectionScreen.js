@@ -3,6 +3,7 @@ import {View, Dimensions, StyleSheet, FlatList, Text, Button} from 'react-native
 import MapView, {Marker, Callout} from 'react-native-maps';
 import { useNavigation } from '@react-navigation/native';
 import CurrentStoreContext from '../contexts/CurrentStore';
+import StoreMarker from "../components/StoreMarker";
 
 const storeLocations = [
   {
@@ -24,8 +25,6 @@ const storeLocations = [
 ];
 
 export default function StoreSelectionScreen() {
-  const navigation = useNavigation();
-  const {currentStore, setCurrentStore} = useContext(CurrentStoreContext);
   return (
   <View>
     <MapView
@@ -37,24 +36,7 @@ export default function StoreSelectionScreen() {
         longitudeDelta: 0.0421,
       }}
     >
-      {storeLocations.map(store => {
-        return (
-          <Marker
-              key={store.name}
-              title={store.name}
-              coordinate={store.coords}
-          >
-            <Callout style={styles.callout}
-              onPress={() => {
-                setCurrentStore({name: store.name, id: store.id});
-                navigation.setOptions({ title: store.name });
-              }}>
-              <Text style={styles.calloutText}>{store.name}{'\n'}</Text>
-              <Button title={currentStore.name === store.name ? "Selected" : "Select"} disabled={currentStore.name === store.name}/>
-            </Callout>
-          </Marker>
-        )
-      })}
+      {storeLocations.map(store => <StoreMarker key={store.name} store={store} />)}
     </MapView>
   </View>
   );
@@ -65,10 +47,5 @@ const styles = new StyleSheet.create({
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },
-  calloutText: {
-    fontWeight: "bold"
-  },
-  callout: {
-    padding: 10
-  },
+
 });
