@@ -1,28 +1,31 @@
 import React, {useContext, useState} from 'react';
-import {Text, StyleSheet, View} from 'react-native';
+import {Text, StyleSheet, View, Image} from 'react-native';
 import {Button} from "react-native-elements";
 import GroceryListContext from "../contexts/GroceryList";
 
 export default function GroceryItemScreen({navigation, route}) {
   const {groceryList, setGroceryList} = useContext(GroceryListContext);
-  const [itemQuantity, setItemQuantity] = useState(0);
+  const [itemQuantity, setItemQuantity] = useState(1);
   return (
     <View style={styles.pageStyle}>
-      <Button
-        icon={{name: 'minus', type: 'entypo'}}
-        type='clear'
-        onPress={() => {
-          setItemQuantity(itemQuantity-1);
-        }}
-      />
-      <Text style={styles.count}>{itemQuantity}</Text>
-      <Button
-        type="clear"
-        icon={{name: 'plus', type: 'entypo'}}
-        onPress={() => {
-          setItemQuantity(itemQuantity+1);
-        }}
-      />
+      <Image source={{uri: route.params.imageUrl}} style={styles.imageStyle}/>
+      <View style={styles.counterStyle}>
+        <Button
+          icon={{name: 'minus', type: 'entypo'}}
+          type='clear'
+          onPress={() => {
+            if (itemQuantity > 1) setItemQuantity(itemQuantity-1);
+          }}
+        />
+        <Text style={styles.count}>{itemQuantity}</Text>
+        <Button
+          type="clear"
+          icon={{name: 'plus', type: 'entypo'}}
+          onPress={() => {
+            if (itemQuantity < 9) setItemQuantity(itemQuantity+1);
+          }}
+        />
+      </View>
       <Button
         title={"Add to Cart"}
         titleStyle={styles.buttonTextStyle}
@@ -58,5 +61,21 @@ const styles = StyleSheet.create({
   },
   buttonTextStyle: {
     fontWeight: "bold"
-  }
+  },
+  counterStyle: {
+    flex: -1,
+    flexDirection: 'row'
+  },
+  imageStyle: {
+    width:200,
+    height:200
+  },
+  count: {
+    alignSelf: 'center',
+    padding: 10,
+    fontSize: 20,
+    fontWeight: 'bold',
+    width: 40,
+    textAlign: 'center'
+  },
 });
