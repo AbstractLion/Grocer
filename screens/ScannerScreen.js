@@ -66,7 +66,7 @@ class QRCodeScanner extends React.Component {
         body: JSON.stringify({userId, qrCode})
       });
       const result = await response.json();
-      console.log(result);
+
     } else {
       // Without the = sign it's just the QR Code
       const response = await fetch(`https://grocerserver.herokuapp.com/lists/complete`, {
@@ -74,8 +74,9 @@ class QRCodeScanner extends React.Component {
         body: JSON.stringify({qrCode: data}),
       });
       const result = await response.json();
-      console.log(result);
+
     }
+    this.setState({scanned: false});
   };
 }
 

@@ -83,7 +83,7 @@ export default function App() {
       if (!id) return;
       const response = await fetch(`https://grocerserver.herokuapp.com/users/${id}`);
       const result = await response.json();
-      console.log(result);
+
     })();
   }, []);
 

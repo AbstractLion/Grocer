@@ -4,24 +4,18 @@ import SvgQRCode from 'react-native-qrcode-svg';
 import {Icon, ListItem, Rating} from "react-native-elements";
 import StackWrapperScreenOptions from "../constants/StackWrapperScreenOptions";
 import UserContext from "../contexts/User";
+import GoBackIcon from "../components/GoBackIcon";
 
 export default function GroceryListSummaryScreen({navigation, route}) {
   const {user} = useContext(UserContext);
 
   useEffect(() => {
     navigation.dangerouslyGetParent()?.setOptions({
-      headerLeft: () => <Icon
-        name="chevron-left"
-        type="entypo"
-        containerStyle={{marginLeft: 15}}
-        onPress={() => {
-          navigation.dangerouslyGetParent()?.setOptions(StackWrapperScreenOptions);
-          navigation.goBack();
-        }}
-      />,
+      headerLeft: () => <GoBackIcon navigation={navigation}/>,
       title: route.params.author
     });
   }, []);
+
   let orderedItems = [];
   for (let [key, value] of Object.entries(route.params.items)) {
     let obj = value;

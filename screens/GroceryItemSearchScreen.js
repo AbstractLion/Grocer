@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useState, useContext, useEffect, useRef} from 'react';
 import {StyleSheet, View, SafeAreaView, FlatList, Text, ActivityIndicator} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 import GroceryItemListing from '../components/GroceryItemListing';
@@ -11,59 +11,71 @@ import useDidUpdate from "../hooks/useDidUpdate";
 function GroceryItemSearch({navigation, ...props}) {
   const [loading, setLoading] = useState(true);
   const [skipValue, setSkipValue] = useState(0);
+  const [searchBoxValue, setSearchBoxValue] = useState('');
   const [searchValue, setSearchValue] = useState('');
   const [items, updateItems] = useState([]);
   const [endReached, setEndReached] = useState(false);
   const {currentStore} = useContext(CurrentStoreContext);
+  const [loadingMore, setLoadingMore] = useState(false);
 
-  async function fetchData(search, skip) {
-    const response = await fetch(`https://grocerserver.herokuapp.com/items?storeId=${currentStore.id}&filter=${search}&skip=${skip}&first=16`);
-    return await response.json();
+  async function fetchData(skip) {
+    console.log(searchValue);
+    const response = await fetch(`https://grocerserver.herokuapp.com/items?storeId=${currentStore.id}&filter=${searchValue}&skip=${skip}&first=16`);
+    const result = await response.json();
+    setEndReached(result.length < 16);
+    const newItems = skip === 0 ? result : [...items, ...result];
+    updateItems(newItems);
   }
 
   useDidUpdate(() => {
     (async () => {
-      if (skipValue === 0) return;
-      const result = await fetchData(searchValue, skipValue);
-      setEndReached(result.length < 16);
-      updateItems([...items, ...result]);
+      if (skipValue === 0 || endReached) return;
+      await fetchData(skipValue);
     })();
   }, [skipValue]);
 
   useDidUpdate(() => {
     setLoading(false);
+    setLoadingMore(false);
   }, [items]);
 
-  useEffect(() => {
+  useDidUpdate(() => {
     (async () => {
       setLoading(true);
-      const result = await fetchData(searchValue, 0);
       setSkipValue(0);
-      updateItems(result);
+      await fetchData(0);
     })();
-  }, [currentStore.id, searchValue]);
+  }, [currentStore.id]);
 
-  function search(text) {
-    const searchVal = text;
-    setSearchValue(text);
-    setTimeout(async () => {
-      if (searchVal === searchValue) {
-        await fetchData();
-      }
+  useEffect(() => {
+    (async() => {
+      setLoading(true);
+      setSkipValue(0);
+      await fetchData(0);
+    })();
+  }, [searchValue]);
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      setSearchValue(searchBoxValue);
     }, 1000);
-  }
+    return () => {
+      clearTimeout(id);
+    }
+  }, [searchBoxValue]);
 
   return (
     <SafeAreaView style={styles.container}>
       <SearchBar
         placeholder="Search..."
-        onChangeText={(text) => search(text)}
-        value={searchValue}
+        onChangeText={(text) => {
+          setSearchBoxValue(text);
+        }}
+        value={searchBoxValue}
         platform="ios"
         containerStyle={{backgroundColor: 'white'}}
       />
-
-      {loading ? <ActivityIndicator size="large"/> :
+      {loading ? <ActivityIndicator size="large" style={styles.loading} /> :
         <FlatList
           data={items}
           horizontal={false}
@@ -82,6 +94,11 @@ function GroceryItemSearch({navigation, ...props}) {
           }}
           ListFooterComponent={endReached ? null :
             <ActivityIndicator size="large" style={styles.loading}/>
+          }
+          ListEmptyComponent={
+            <View style={{flex: 1, alignItems: 'center'}}>
+              <Text style={{margin: 20}}>Sorry, couldn't find this item in this store.</Text>
+            </View>
           }
         />
       }

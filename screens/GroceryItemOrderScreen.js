@@ -1,11 +1,21 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Text, StyleSheet, View} from 'react-native';
 import {Button, Image, Rating} from "react-native-elements";
 import GroceryListContext from "../contexts/GroceryList";
+import StackWrapperScreenOptions from "../constants/StackWrapperScreenOptions";
+import GoBackIcon from "../components/GoBackIcon";
 
 export default function GroceryItemScreen({navigation, route}) {
   const {groceryList, setGroceryList} = useContext(GroceryListContext);
   const [itemQuantity, setItemQuantity] = useState(1);
+
+  useEffect(() => {
+    navigation.dangerouslyGetParent()?.setOptions({
+      headerLeft: () => <GoBackIcon navigation={navigation}/>,
+      title: route.params.name
+    })
+  }, []);
+
   return (
     <View style={styles.pageStyle}>
       <View style={styles.descContainer}>

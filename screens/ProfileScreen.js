@@ -40,7 +40,7 @@ function ProfileScreen() {
           const result = await response.json();
           setUser(result);
           await SecureStore.setItemAsync('userId', result._id);
-          console.log(result);
+
         }}
       />
       <Button

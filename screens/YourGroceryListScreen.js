@@ -75,7 +75,7 @@ function YourGroceryListScreen() {
           });
           setLoading(false);
           const result = await response.json();
-          console.log(result);
+
         }}
         containerStyle={{
           width: '80%',
