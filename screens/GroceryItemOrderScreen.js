@@ -1,5 +1,5 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {Text, StyleSheet, View} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {Text, StyleSheet, View, Dimensions} from 'react-native';
 import {Button, Image, Rating} from "react-native-elements";
 import GroceryListContext from "../contexts/GroceryList";
 import GoBackIcon from "../components/GoBackIcon";
@@ -50,28 +50,38 @@ export default function GroceryItemScreen({navigation, route}) {
       </View>
 
       <View style={styles.buttonContainer}>
-        <Button
-          title={"Add to Cart"}
-          titleStyle={styles.buttonTextStyle}
-          buttonStyle={{height:50}}
-          onPress={() => {
-            groceryList[route.params._id] = groceryList[route.params._id] || {
-              name: route.params.name,
-              imageUrl: route.params.imageUrl,
-              price: route.params.price,
-              count: 0,
-            };
-            const count = groceryList[route.params._id].count;
-            if (count < 9) {
-              const newItem = {
-                ...groceryList[route.params._id],
-                count: count + itemQuantity
+        <View style={{flexDirection:'row'}}>
+          <Button
+            title={"Add to Cart"}
+            titleStyle={styles.buttonTextStyle}
+            buttonStyle={styles.buttonStyle}
+            onPress={() => {
+              groceryList[route.params._id] = groceryList[route.params._id] || {
+                name: route.params.name,
+                imageUrl: route.params.imageUrl,
+                price: route.params.price,
+                count: 0,
               };
-              setGroceryList({...groceryList, [route.params._id]: newItem});
-            }
-            navigation.pop();
-          }}
-        />
+              const count = groceryList[route.params._id].count;
+              if (count < 9) {
+                const newItem = {
+                  ...groceryList[route.params._id],
+                  count: count + itemQuantity
+                };
+                setGroceryList({...groceryList, [route.params._id]: newItem});
+              }
+              navigation.pop();
+            }}
+          />
+          <Button
+            title={"Cancel"}
+            titleStyle={styles.buttonTextStyle}
+            buttonStyle={styles.buttonStyle}
+            onPress={() => {
+              navigation.pop();
+            }}
+          />
+        </View>
       </View>
     </View>
   )
@@ -86,10 +96,14 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
   },
   buttonTextStyle: {
     fontWeight: "bold"
+  },
+  buttonStyle: {
+    height:75,
+    width: Dimensions.get('window').width / 2
   },
   counterStyle: {
     flex: -1,
