@@ -2,47 +2,27 @@ import React, {useState, useEffect} from 'react';
 import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
 import StackWrapper from '../navigation/StackWrapper';
 import {ListItem, SearchBar} from "react-native-elements";
-import GroceryListScreen from "./GroceryListScreen";
+import GroceryListSummaryScreen from "./GroceryListSummaryScreen";
 import {createStackNavigator} from "@react-navigation/stack";
-import StackWrapperScreenOptions from "../constants/StackWrapperScreenOptions";
 import dateFormat from 'dateformat';
-import cuid from "cuid";
-import {useFocusEffect} from "@react-navigation/core";
 
 function GroceryListSearch({navigation}) {
-  const [searchValue, setSearchValue] = useState('');
   const [groceryLists, updateGroceryLists] = useState([]);
 
   useEffect(() => {
-    navigation.addListener('focus', () => {
-      navigation.dangerouslyGetParent()?.setOptions(StackWrapperScreenOptions);
-    });
-  }, [navigation]);
+    (async() => {
+      await updateData();
+    })();
+  }, []);
 
-  function search() {
-
-  }
-
-  function updateData() {
-    fetch('https://grocer-app-flask.herokuapp.com/lists')
-        .then((response) => response.json())
-        .then((json) => {
-          updateGroceryLists(json.data);
-        })
-        .catch((error) => {
-          console.error("Error occured while getting item list");
-        });
+  async function updateData() {
+    const response = await fetch('https://grocerserver.herokuapp.com/lists');
+    const result = await response.json();
+    updateGroceryLists(result);
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <SearchBar
-        placeholder="Search..."
-        onChangeText={search}
-        value={searchValue}
-        platform="ios"
-        containerStyle={{backgroundColor: 'white'}}
-      />
       <FlatList
         data={groceryLists}
         horizontal={false}
@@ -83,7 +63,7 @@ function GroceryListSearchScreen({navigation, route}) {
       />
       <Stack.Screen
         name="GroceryList"
-        component={GroceryListScreen}
+        component={GroceryListSummaryScreen}
       />
     </Stack.Navigator>
   )

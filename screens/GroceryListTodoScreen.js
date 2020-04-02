@@ -4,20 +4,7 @@ import SvgQRCode from 'react-native-qrcode-svg';
 import {Icon, ListItem, Rating} from "react-native-elements";
 import StackWrapperScreenOptions from "../constants/StackWrapperScreenOptions";
 
-export default function GroceryListScreen({navigation, route}) {
-    useEffect(() => {
-        navigation.dangerouslyGetParent()?.setOptions({
-            headerLeft: () => <Icon
-                name="chevron-left"
-                type="entypo"
-                containerStyle={{marginLeft: 15}}
-                onPress={() => {
-                    navigation.goBack();
-                }}
-            />,
-          title: route.params.author
-        });
-    }, []);
+export default function GroceryListTodoScreen({navigation, route}) {
     let orderedItems = [];
     for (let [key, value] of Object.entries(route.params.items)) {
         let obj = value;

@@ -51,20 +51,31 @@ class QRCodeScanner extends React.Component {
     );
   }
 
-  handleBarCodeScanned = ({type, data}) => {
+  handleBarCodeScanned = async ({type, data}) => {
     this.setState({scanned: true});
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-    fetch('/lists/:id/activate', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        type: {type},
-        data: {data},
-      }),
-    });
+    // Activating the QR Code, data string in form of <userId>=<qrCode>
+    if (data.includes("=")) {
+      const [userId, qrCode] = data.split('=');
+      const response = await fetch(`https://grocerserver.herokuapp.com/lists/activate`, {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({userId, qrCode})
+      });
+      const result = await response.json();
+      console.log(result);
+    } else {
+      // Without the = sign it's just the QR Code
+      const response = await fetch(`https://grocerserver.herokuapp.com/lists/complete`, {
+        method: 'POST',
+        body: JSON.stringify({qrCode: data}),
+      });
+      const result = await response.json();
+      console.log(result);
+    }
   };
 }
 
