@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {Text, StyleSheet, View, Dimensions} from 'react-native';
 import {Button, Image, Rating} from "react-native-elements";
 import GroceryListContext from "../contexts/GroceryList";
