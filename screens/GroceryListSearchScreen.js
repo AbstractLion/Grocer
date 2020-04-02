@@ -16,7 +16,8 @@ function GroceryListSearch({navigation}) {
   }, []);
 
   async function updateData() {
-    const response = await fetch('https://grocerserver.herokuapp.com/lists');
+    const listsUrl = 'https://grocerserver.herokuapp.com/lists';
+    const response = await fetch(listsUrl);
     const result = await response.json();
     updateGroceryLists(result);
   }
@@ -30,7 +31,9 @@ function GroceryListSearch({navigation}) {
           chevron={true}
           title={item.author}
           titleStyle={{fontWeight: 'bold'}}
-          subtitle={dateFormat(item.createdAt, "dddd, mmmm dS, yyyy, h:MM:ss TT")}
+          subtitle={
+            dateFormat(item.createdAt, "dddd, mmmm dS, yyyy, h:MM:ss TT")
+          }
           onPress={() => {
             navigation.navigate("GroceryList", item);
           }}

@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {View} from 'react-native';
 import SvgQRCode from 'react-native-qrcode-svg';
-import {Icon} from "react-native-elements";
 import GoBackIcon from "../components/GoBackIcon";
 
 export default function GroceryListScreen({navigation, route}) {

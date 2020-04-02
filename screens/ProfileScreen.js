@@ -22,7 +22,8 @@ function ProfileScreen() {
         title="Create Shopper"
         onPress={async () => {
           const pushToken = await SecureStore.getItemAsync('pushToken');
-          const response = await fetch('https://grocerserver.herokuapp.com/users', {
+          const usersUrl = 'https://grocerserver.herokuapp.com/users';
+          const response = await fetch(usersUrl, {
             method: 'post',
             headers: {
               'Content-Type': 'application/json',

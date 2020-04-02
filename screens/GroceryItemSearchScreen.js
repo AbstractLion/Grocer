@@ -1,5 +1,7 @@
-import React, {useState, useContext, useEffect, useRef} from 'react';
-import {StyleSheet, View, SafeAreaView, FlatList, Text, ActivityIndicator} from 'react-native';
+import React, {useState, useContext, useEffect} from 'react';
+import {
+  StyleSheet, View, SafeAreaView, FlatList, Text, ActivityIndicator
+} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 import GroceryItemListing from '../components/GroceryItemListing';
 import StackWrapper from "../navigation/StackWrapper";
@@ -20,7 +22,9 @@ function GroceryItemSearch({navigation, ...props}) {
 
   async function fetchData(skip) {
     console.log(searchValue);
-    const response = await fetch(`https://grocerserver.herokuapp.com/items?storeId=${currentStore.id}&filter=${searchValue}&skip=${skip}&first=16`);
+    const itemsUrl = 'https://grocerserver.herokuapp.com/items?storeId=' +
+    `${currentStore.id}&filter=${searchValue}&skip=${skip}&first=16`;
+    const response = await fetch(itemsUrl);
     const result = await response.json();
     setEndReached(result.length < 16);
     const newItems = skip === 0 ? result : [...items, ...result];
@@ -90,14 +94,19 @@ function GroceryItemSearch({navigation, ...props}) {
           keyExtractor={(item) => item._id.toString()}
           contentContainerStyle={styles.listContainer}
           onEndReached={() => {
-            setSkipValue(skipValue + 16);
+            if (!endReached) {
+              setLoadingMore(true);
+              setSkipValue(skipValue + 16);
+            }
           }}
           ListFooterComponent={endReached ? null :
-            <ActivityIndicator size="large" style={styles.loading}/>
+            <ActivityIndicator size="large" style={styles.loading} />
           }
           ListEmptyComponent={
             <View style={{flex: 1, alignItems: 'center'}}>
-              <Text style={{margin: 20}}>Sorry, couldn't find this item in this store.</Text>
+              <Text style={{margin: 20}}>
+                Sorry, couldn't find this item in this store.
+              </Text>
             </View>
           }
         />
@@ -111,8 +120,14 @@ const Stack = createStackNavigator();
 function GroceryItemSearchScreen() {
   return (
     <Stack.Navigator type={"modal"} screenOptions={{headerShown:false}}>
-      <Stack.Screen component={GroceryItemSearch} name={"GroceryItemSearch"}/>
-      <Stack.Screen component={GroceryItemOrderScreen} name={"GroceryItemScreen"}/>
+      <Stack.Screen
+        component={GroceryItemSearch}
+        name={"GroceryItemSearch"}
+      />
+      <Stack.Screen
+        component={GroceryItemOrderScreen}
+        name={"GroceryItemScreen"}
+      />
     </Stack.Navigator>
   )
 }

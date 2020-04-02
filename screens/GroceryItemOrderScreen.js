@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Text, StyleSheet, View} from 'react-native';
 import {Button, Image, Rating} from "react-native-elements";
 import GroceryListContext from "../contexts/GroceryList";
-import StackWrapperScreenOptions from "../constants/StackWrapperScreenOptions";
 import GoBackIcon from "../components/GoBackIcon";
 
 export default function GroceryItemScreen({navigation, route}) {
@@ -19,14 +18,18 @@ export default function GroceryItemScreen({navigation, route}) {
   return (
     <View style={styles.pageStyle}>
       <View style={styles.descContainer}>
-        <Text style={{fontWeight:"bold", fontSize: 20, padding:20}}>{route.params.name}</Text>
+        <Text style={{fontWeight:"bold", fontSize: 20, padding:20}}>
+          {route.params.name}
+        </Text>
         <Image source={{uri: route.params.imageUrl}} style={styles.imageStyle}/>
         <Rating
           imageSize={20}
           readonly
           startingValue={route.params.rating}
         />
-        <Text style={{padding: 10, fontSize: 15, fontWeight: "bold"}}>${route.params.price.toFixed(2)}</Text>
+        <Text style={{padding: 10, fontSize: 15, fontWeight: "bold"}}>
+          ${route.params.price.toFixed(2)}
+        </Text>
         <View style={styles.counterStyle}>
           <Button
             icon={{name: 'minus', type: 'entypo'}}

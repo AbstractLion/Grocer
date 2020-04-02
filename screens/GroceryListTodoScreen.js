@@ -36,7 +36,8 @@ export default function GroceryListTodoScreen({navigation, route}) {
                 />
             </View>
           <Text style={{fontWeight: 'bold', margin: 20, textAlign: 'center'}}>
-            Show this to an employee in the current store to start helping somebody vulnerable to their groceries!
+            Show this to an employee in the current store to start helping
+            somebody vulnerable to their groceries!
           </Text>
         </View>
     );

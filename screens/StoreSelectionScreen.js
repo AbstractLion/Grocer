@@ -1,8 +1,6 @@
-import React, {useContext, useEffect} from "react";
-import {View, Dimensions, StyleSheet, FlatList, Text, Button} from 'react-native';
-import MapView, {Marker, Callout} from 'react-native-maps';
-import { useNavigation } from '@react-navigation/native';
-import CurrentStoreContext from '../contexts/CurrentStore';
+import React from "react";
+import {View, Dimensions, StyleSheet} from 'react-native';
+import MapView from 'react-native-maps';
 import StoreMarker from "../components/StoreMarker";
 
 const storeLocations = [
@@ -36,7 +34,10 @@ export default function StoreSelectionScreen() {
         longitudeDelta: 0.0421,
       }}
     >
-      {storeLocations.map(store => <StoreMarker key={store.name} store={store} />)}
+      {storeLocations.map(store => <StoreMarker
+        key={store.name}
+        store={store}
+      />)}
     </MapView>
   </View>
   );

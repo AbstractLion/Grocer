@@ -21,7 +21,7 @@ function YourGroceryListScreen() {
       <FlatList
         data={Object.entries(groceryList)}
         ListEmptyComponent={
-          <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <View style={styles.listEmptyComponent}>
             <Text style={{margin: 50, fontSize: 16}}>Your cart is empty!</Text>
           </View>
         }
@@ -38,7 +38,7 @@ function YourGroceryListScreen() {
                     setGroceryList(newList);
                   }}
                 >
-                  <Text style={{fontWeight: 'bold', fontSize: 16, color: 'white'}}>Delete</Text>
+                  <Text style={styles.deleteText}>Delete</Text>
                 </TouchableHighlight>
               </View>
               <ListItem
@@ -59,7 +59,8 @@ function YourGroceryListScreen() {
         disabled={Object.keys(groceryList).length === 0}
         onPress={async () => {
           setLoading(true);
-          const response = await fetch('https://grocerserver.herokuapp.com/lists', {
+          const listsUrl = 'https://grocerserver.herokuapp.com/lists';
+          const response = await fetch(listsUrl, {
             method: 'POST',
             headers: {
               Accept: 'application/json',
@@ -101,6 +102,16 @@ const styles = StyleSheet.create({
   },
   listItem: {
     height: 75
+  },
+  listEmptyComponent: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  deleteText: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: 'white'
   }
 
 });

@@ -47,7 +47,8 @@ export default function GroceryListSummaryScreen({navigation, route}) {
         />
       </View>
       <Text style={styles.instructions}>
-        Show this to an employee in the current store to start helping somebody vulnerable to their groceries!
+        Show this to an employee in the current store to start helping somebody
+        vulnerable to their groceries!
       </Text>
     </View>
   );
