@@ -3,6 +3,7 @@ import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
 import StackWrapper from '../navigation/StackWrapper';
 import {ListItem, SearchBar} from "react-native-elements";
 import GroceryListSummaryScreen from "./GroceryListSummaryScreen";
+import GroceryListChecklistScreen from "./GroceryListChecklistScreen";
 import {createStackNavigator} from "@react-navigation/stack";
 import dateFormat from 'dateformat';
 
@@ -27,18 +28,18 @@ function GroceryListSearch({navigation}) {
       <FlatList
         data={groceryLists}
         horizontal={false}
-        renderItem={({item}) => <ListItem
+        renderItem={({item: groceryList}) => <ListItem
           chevron={true}
-          title={item.author}
+          title={groceryList.author}
           titleStyle={{fontWeight: 'bold'}}
           subtitle={
-            dateFormat(item.createdAt, "dddd, mmmm dS, yyyy, h:MM:ss TT")
+            dateFormat(groceryList.createdAt, "dddd, mmmm dS, yyyy, h:MM:ss TT")
           }
           onPress={() => {
-            navigation.navigate("GroceryList", item);
+            navigation.navigate("GroceryList", groceryList);
           }}
         />}
-        keyExtractor={(item) => item._id.toString()}
+        keyExtractor={(groceryList) => groceryList._id.toString()}
         contentContainerStyle={styles.listContainer}
       />
     </SafeAreaView>
@@ -67,6 +68,10 @@ function GroceryListSearchScreen({navigation, route}) {
       <Stack.Screen
         name="GroceryList"
         component={GroceryListSummaryScreen}
+      />
+      <Stack.Screen
+        name="GroceryListChecklist"
+        component={GroceryListChecklistScreen}
       />
     </Stack.Navigator>
   )

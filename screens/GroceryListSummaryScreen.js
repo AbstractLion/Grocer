@@ -1,27 +1,40 @@
 import React, {useContext, useEffect} from 'react';
-import {View, Text, FlatList, Image, StyleSheet} from 'react-native';
+import {View, Text, FlatList, Image, StyleSheet, Platform} from 'react-native';
 import SvgQRCode from 'react-native-qrcode-svg';
 import {Icon, ListItem, Rating} from "react-native-elements";
-import StackWrapperScreenOptions from "../constants/StackWrapperScreenOptions";
 import UserContext from "../contexts/User";
 import GoBackIcon from "../components/GoBackIcon";
+import {Notifications} from 'expo';
 
 export default function GroceryListSummaryScreen({navigation, route}) {
+  const groceryList = route.params;
   const {user} = useContext(UserContext);
+
+  function handleNotification(notification) {
+    console.log(notification);
+    if (notification.data.isActivation && notification.data.userId === user._id)
+      navigation.navigate('GroceryListChecklist', groceryList);
+  }
+
+  useEffect(() => {
+    const listener = Notifications.addListener(handleNotification);
+    return () => listener.remove();
+  }, []);
 
   useEffect(() => {
     navigation.dangerouslyGetParent()?.setOptions({
       headerLeft: () => <GoBackIcon navigation={navigation}/>,
-      title: route.params.author
+      title: groceryList.author
     });
   }, []);
 
   let orderedItems = [];
-  for (let [key, value] of Object.entries(route.params.items)) {
+  for (let [key, value] of Object.entries(groceryList.items)) {
     let obj = value;
     obj._id = key;
     orderedItems.push(obj);
   }
+
   return (
     <View style={{flex: 1}}>
       <FlatList

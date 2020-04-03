@@ -59,6 +59,9 @@ export default function App() {
           vibrate: [250],
           sound: true,
         });
+        await Notifications.createChannelAndroidAsync('activated', {
+          name: 'Activated',
+        });
       }
     })();
   }, []);

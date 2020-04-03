@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {BarCodeScanner} from 'expo-barcode-scanner';
 import StackWrapper from "../navigation/StackWrapper";
-import {Notifications} from 'expo';
+import {Button} from 'react-native-elements';
 
 function QRCodeScanner() {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
@@ -34,7 +34,7 @@ function QRCodeScanner() {
         body: JSON.stringify({userId, qrCode})
       });
       const result = await response.json();
-
+      console.log(result);
     } else {
       // Without the = sign it's just the QR Code
       const completeUrl = 'https://grocerserver.herokuapp.com/lists/complete';
@@ -43,6 +43,7 @@ function QRCodeScanner() {
         body: JSON.stringify({qrCode: data}),
       });
       const result = await response.json();
+      console.log(result);
     }
     setScanned(false);
   }
@@ -79,6 +80,10 @@ function QRCodeScanner() {
         Scan a shopper's QR Code to allow them toprepare groceries for somebody
         else!
       </Text>
+      <Button
+        onPress={() => setScannedCode('')}
+        title="Rescan"
+      />
     </View>
   );
 }
