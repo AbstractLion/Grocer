@@ -52,7 +52,10 @@ export default function GroceryListChecklistScreen({navigation, route}) {
         <Overlay
           isVisible={isQRCodeVisible}
         >
-          <Text>Test</Text>
+          <SvgQRCode
+            value={groceryList._id}
+          />
+          <Text>When checking out, make sure to check out your order separately from the requestor's, and show them this QR Code when they check out the requestor's order.</Text>
         </Overlay>
       </View>
       <View style={styles.buttonView}>
@@ -82,7 +85,7 @@ export default function GroceryListChecklistScreen({navigation, route}) {
           title="Complete"
           disabled={Object.keys(checkedItems).length !== groceryListItems.length}
           onPress={() => {
-
+            setQRCodeVisibility(true);
           }}
         >
           Complete
