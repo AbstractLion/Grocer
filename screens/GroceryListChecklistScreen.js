@@ -1,13 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, FlatList, Image, StyleSheet} from 'react-native';
+import {View, Text, FlatList, Image, StyleSheet, Alert} from 'react-native';
 import SvgQRCode from 'react-native-qrcode-svg';
-import {Button, CheckBox, ListItem} from "react-native-elements";
+import {Button, CheckBox, ListItem, Overlay} from "react-native-elements";
 import StackWrapperScreenOptions from "../constants/StackWrapperScreenOptions";
 
 export default function GroceryListChecklistScreen({navigation, route}) {
   const groceryList = route.params;
   const [groceryListItems, setGroceryListItems] = useState([]);
   const [checkedItems, setCheckedItems] = useState({});
+  const [isQRCodeVisible, setQRCodeVisibility] = useState(false);
 
   useEffect(() => {
     let orderedItems = [];
@@ -30,10 +31,12 @@ export default function GroceryListChecklistScreen({navigation, route}) {
               rightElement={<CheckBox
                 checked={checkedItems[item._id]}
                 onPress={() => {
-                  setCheckedItems({
-                    ...checkedItems,
-                    [item._id]: !checkedItems[item._id]
-                  });
+                  const newCheckedItems = {...checkedItems};
+                  if (checkedItems[item._id])
+                    delete newCheckedItems[item._id];
+                  else
+                    newCheckedItems[item._id] = true;
+                  setCheckedItems(newCheckedItems);
                 }}
               />}
               title={`${item.name} (${item.count?.toString()})`}
@@ -46,25 +49,45 @@ export default function GroceryListChecklistScreen({navigation, route}) {
       <View
         style={styles.qrStyle}
       >
-        <SvgQRCode
-          value={route.params.qrCode}
-        />
+        <Overlay
+          isVisible={isQRCodeVisible}
+        >
+          <Text>Test</Text>
+        </Overlay>
       </View>
-      <Button
-        onPress={() => {
-          navigation.popToTop();
-        }}
-      >
-        Cancel
-      </Button>
-      <Button
-        disabled={Object.keys(checkedItems).length !== groceryListItems.length}
-        onPress={() => {
+      <View style={styles.buttonView}>
+        <Button
+          buttonStyle={{backgroundColor: 'red'}}
+          containerStyle={[styles.buttonContainer, {marginRight: 5}]}
+          title="Cancel"
+          onPress={() => {
+            Alert.alert(
+              "Are you sure?",
+              "You will not be able to fulfill another request" +
+              " within 24 hours. Make sure that you don't cancel often, or" +
+              " your account may be suspended.",
+              [
+                {text: "Cancel anyways", onPress: () => {
+                  navigation.popToTop();
+                }},
+                {text: "Nevermind"}
+              ]
+            );
+          }}
+        >
+          Cancel
+        </Button>
+        <Button
+          containerStyle={[styles.buttonContainer, {marginLeft: 5}]}
+          title="Complete"
+          disabled={Object.keys(checkedItems).length !== groceryListItems.length}
+          onPress={() => {
 
-        }}
-      >
-        Complete
-      </Button>
+          }}
+        >
+          Complete
+        </Button>
+      </View>
     </View>
   );
 }
@@ -76,5 +99,16 @@ const styles = StyleSheet.create({
   },
   qrStyle: {
     alignItems: 'center'
+  },
+  buttonView: {
+    flex: 1,
+    backgroundColor: 'yellow',
+    flexDirection: 'row',
+    alignItems: 'flex-end'
+  },
+  buttonContainer: {
+    margin: 10,
+    flex: 1,
+    flexGrow: 1,
   }
 });

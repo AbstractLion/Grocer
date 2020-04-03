@@ -57,36 +57,46 @@ function QRCodeScanner() {
 
   return (
     <View
-      style={{
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'stretch',
-        marginTop: 30,
-        marginBottom: 30,
-      }}>
+      style={styles.container}>
       <View style={{
         flex: 1,
         position: 'relative'
       }}>
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={{position: 'absolute', top: 0, bottom: 0, right: 0, left: 0}}
+          style={StyleSheet.absoluteFill}
         />
       </View>
       <Text
-        style={{fontWeight: 'bold', textAlign: 'center', margin: 50}}
+        style={styles.instructions}
       >
-        Scan a shopper's QR Code to allow them toprepare groceries for somebody
+        Scan a shopper's QR Code to allow them to prepare groceries for somebody
         else!
       </Text>
       <Button
+        buttonStyle={{marginHorizontal: 10}}
         onPress={() => setScannedCode('')}
         title="Rescan"
       />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    marginTop: 30,
+    marginBottom: 30,
+  },
+  instructions: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    margin: 50
+  }
+});
 
 export default StackWrapper(QRCodeScanner, {
   headerRight: null,

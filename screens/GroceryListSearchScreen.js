@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
 import StackWrapper from '../navigation/StackWrapper';
 import {ListItem, SearchBar} from "react-native-elements";
@@ -6,9 +6,11 @@ import GroceryListSummaryScreen from "./GroceryListSummaryScreen";
 import GroceryListChecklistScreen from "./GroceryListChecklistScreen";
 import {createStackNavigator} from "@react-navigation/stack";
 import dateFormat from 'dateformat';
+import UserContext from "../contexts/User";
 
 function GroceryListSearch({navigation}) {
   const [groceryLists, updateGroceryLists] = useState([]);
+  const {user} = useContext(UserContext);
 
   useEffect(() => {
     (async() => {
@@ -36,6 +38,10 @@ function GroceryListSearch({navigation}) {
             dateFormat(groceryList.createdAt, "dddd, mmmm dS, yyyy, h:MM:ss TT")
           }
           onPress={() => {
+            if (!user) {
+              alert("You need to be a shopper to access this screen.");
+              return;
+            }
             navigation.navigate("GroceryList", groceryList);
           }}
         />}

@@ -58,6 +58,10 @@ function YourGroceryListScreen() {
         title="Submit Grocery List Request"
         disabled={Object.keys(groceryList).length === 0}
         onPress={async () => {
+          if (!user) {
+            alert("You need to be a shopper to perform this action.");
+            return;
+          }
           setLoading(true);
           const listsUrl = 'https://grocerserver.herokuapp.com/lists';
           const response = await fetch(listsUrl, {

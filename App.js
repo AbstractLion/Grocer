@@ -17,7 +17,8 @@ import {
 import {Notifications} from 'expo';
 import * as Permissions from 'expo-permissions';
 import * as SecureStore from 'expo-secure-store';
-import ProfileScreen from "./screens/ProfileScreen";
+import RoleSelectionScreen from "./screens/RoleSelectionScreen";
+import {Overlay} from 'react-native-elements';
 
 const Drawer = createDrawerNavigator();
 
@@ -33,15 +34,26 @@ const userInfo = {
 function DrawerContent(props) {
   const {user, setUser} = useContext(UserContext);
 
-  return(
+  return (
     <DrawerContentScrollView {...props}>
-      <View style={{flex: 1, padding: 15}}>
-        <Text style={{fontWeight: "bold", fontSize: 25}}>{user.firstName + ' ' + user.lastName}</Text>
-        <Text>{user.email}</Text>
-        <Text>{user.phone}</Text>
-        <Text>Role: {user.role}</Text>
-      </View>
-      <DrawerItemList {...props} />
+        <View style={{flex: 1, padding: 15}}>
+          {user ?
+            <>
+              <Text style={{
+                fontWeight: "bold",
+                fontSize: 25
+              }}>{user.firstName + ' ' + user.lastName}</Text>
+              <Text>{user.email}</Text>
+              <Text>{user.phone}</Text>
+              <Text>Role: {user.role}</Text>
+            </> :
+            <Text style={{
+              fontWeight: 'bold',
+              fontSize: 20
+            }}>No Role Selected</Text>
+          }
+        </View>
+      <DrawerItemList {...props}/>
     </DrawerContentScrollView>
   );
 }
@@ -49,7 +61,7 @@ function DrawerContent(props) {
 export default function App() {
   const [currentStore, setCurrentStore] = useState({name: "Walmart", id: 0});
   const [groceryList, setGroceryList] = useState({});
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     (async() => {
@@ -92,7 +104,7 @@ export default function App() {
 
   React.useEffect(() => {
     isMountedRef.current = true;
-    return () => (isMountedRef.current = false);
+    return () => {isMountedRef.current = false};
   }, []);
 
   return (
@@ -100,7 +112,10 @@ export default function App() {
       <GroceryListContext.Provider value={{groceryList, setGroceryList}}>
         <UserContext.Provider value={{user, setUser}}>
           <NavigationContainer ref={navigationRef}>
-            <Drawer.Navigator drawerContent={props => <DrawerContent {...props}/>}>
+            <Drawer.Navigator
+              initialRouteName="RoleSelection"
+              drawerContent={props => <DrawerContent {...props}/>}
+            >
               <Drawer.Screen
                 name="GrocerySearch"
                 options={{
@@ -130,11 +145,11 @@ export default function App() {
                 component={ScannerScreen}
               />
               <Drawer.Screen
-                name="Profile"
+                name="RoleSelection"
                 options={{
-                  title: "Your Profile"
+                  title: "Change Role"
                 }}
-                component={ProfileScreen}
+                component={RoleSelectionScreen}
               />
             </Drawer.Navigator>
           </NavigationContainer>

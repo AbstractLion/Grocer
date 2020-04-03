@@ -3,6 +3,7 @@ import {Text, StyleSheet, View, Dimensions} from 'react-native';
 import {Button, Image, Rating} from "react-native-elements";
 import GroceryListContext from "../contexts/GroceryList";
 import GoBackIcon from "../components/GoBackIcon";
+import StackWrapperScreenOptions from "../constants/StackWrapperScreenOptions";
 
 export default function GroceryItemScreen({navigation, route}) {
   const {groceryList, setGroceryList} = useContext(GroceryListContext);
@@ -12,7 +13,12 @@ export default function GroceryItemScreen({navigation, route}) {
     navigation.dangerouslyGetParent()?.setOptions({
       headerLeft: () => <GoBackIcon navigation={navigation}/>,
       title: route.params.name
-    })
+    });
+    return () => {
+      navigation.dangerouslyGetParent()?.setOptions(
+        StackWrapperScreenOptions
+      );
+    }
   }, []);
 
   return (
@@ -49,12 +55,13 @@ export default function GroceryItemScreen({navigation, route}) {
         </View>
       </View>
 
-      <View style={styles.buttonContainer}>
+      <View style={styles.buttonView}>
         <View style={{flexDirection:'row'}}>
           <Button
             title={"Add to Cart"}
             titleStyle={styles.buttonTextStyle}
             buttonStyle={styles.buttonStyle}
+            containerStyle={[styles.buttonContainer, {marginRight: 5}]}
             onPress={() => {
               groceryList[route.params._id] = groceryList[route.params._id] || {
                 name: route.params.name,
@@ -74,9 +81,10 @@ export default function GroceryItemScreen({navigation, route}) {
             }}
           />
           <Button
-            title={"Cancel"}
+            title="Cancel"
             titleStyle={styles.buttonTextStyle}
             buttonStyle={styles.buttonStyle}
+            containerStyle={[styles.buttonContainer, {marginLeft: 5}]}
             onPress={() => {
               navigation.pop();
             }}
@@ -94,16 +102,20 @@ const styles = StyleSheet.create({
   descContainer: {
     alignItems: "center"
   },
-  buttonContainer: {
+  buttonView: {
     flex: 1,
-    justifyContent: "flex-end",
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+  },
+  buttonContainer: {
+    margin: 10,
+    flex: 1,
+    flexGrow: 1
   },
   buttonTextStyle: {
     fontWeight: "bold"
   },
   buttonStyle: {
-    height:75,
-    width: Dimensions.get('window').width / 2
   },
   counterStyle: {
     flex: -1,
