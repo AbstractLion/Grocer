@@ -51,11 +51,14 @@ export default function GroceryListChecklistScreen({navigation, route}) {
       >
         <Overlay
           isVisible={isQRCodeVisible}
+          onBackdropPress={() => setQRCodeVisibility(false)}
         >
-          <SvgQRCode
-            value={groceryList._id}
-          />
-          <Text>When checking out, make sure to check out your order separately from the requestor's, and show them this QR Code when they check out the requestor's order.</Text>
+          <View style={styles.completionOverlay}>
+            <SvgQRCode
+              value={groceryList._id}
+            />
+            <Text style={{padding:20}}>When checking out, make sure to check out your order separately from the requestor's, and show them this QR Code when they check out the requestor's order.</Text>
+          </View>
         </Overlay>
       </View>
       <View style={styles.buttonView}>
@@ -105,7 +108,6 @@ const styles = StyleSheet.create({
   },
   buttonView: {
     flex: 1,
-    backgroundColor: 'yellow',
     flexDirection: 'row',
     alignItems: 'flex-end'
   },
@@ -113,5 +115,11 @@ const styles = StyleSheet.create({
     margin: 10,
     flex: 1,
     flexGrow: 1,
+  },
+  completionOverlay: {
+    flex:1,
+    padding: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });
