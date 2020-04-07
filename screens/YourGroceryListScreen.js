@@ -58,7 +58,7 @@ function YourGroceryListScreen() {
         title="Submit Grocery List Request"
         disabled={Object.keys(groceryList).length === 0}
         onPress={async () => {
-          if (!user) {
+          if (user.role === 'Worker') {
             alert("You need to be a shopper to perform this action.");
             return;
           }
@@ -79,8 +79,13 @@ function YourGroceryListScreen() {
             }),
           });
           setLoading(false);
-          const result = await response.json();
-
+          if (response.status === 400) {
+            alert("Something went wrong while trying to process your order");
+            return;
+          }
+          setGroceryList({});
+          alert("Your grocery list was sucessfully submitted.");
+          navigation.navigate("GrocerySearch");
         }}
         containerStyle={{
           width: '80%',

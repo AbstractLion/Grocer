@@ -11,7 +11,6 @@ export default function GoBackIcon({navigation}) {
     type="entypo"
     containerStyle={{marginLeft: 15}}
     onPress={() => {
-      console.log(navigation);
       navigation.dangerouslyGetParent()?.setOptions({
         ...StackWrapperScreenOptions,
         title: currentStore.name

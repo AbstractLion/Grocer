@@ -18,18 +18,8 @@ import {Notifications} from 'expo';
 import * as Permissions from 'expo-permissions';
 import * as SecureStore from 'expo-secure-store';
 import RoleSelectionScreen from "./screens/RoleSelectionScreen";
-import {Overlay} from 'react-native-elements';
 
 const Drawer = createDrawerNavigator();
-
-const userInfo = {
-  name: "John Doe",
-  email: "john.doe@gmail.com",
-  phone: "(416) 132-4634",
-  timeout: "00:34",
-  role: "Worker",
-  description: "Worker for Walmart"
-};
 
 function DrawerContent(props) {
   const {user, setUser} = useContext(UserContext);
@@ -61,7 +51,13 @@ function DrawerContent(props) {
 export default function App() {
   const [currentStore, setCurrentStore] = useState({name: "Walmart", id: 0});
   const [groceryList, setGroceryList] = useState({});
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({
+    role: 'Worker',
+    phoneNumber: '4161324634',
+    email: 'john.doe@gmail.com',
+    firstName: 'John',
+    lastName: 'Doe'
+  });
 
   useEffect(() => {
     (async() => {
@@ -71,6 +67,7 @@ export default function App() {
           vibrate: [250],
           sound: true,
         });
+
         await Notifications.createChannelAndroidAsync('activated', {
           name: 'Activated',
         });
@@ -98,7 +95,6 @@ export default function App() {
       if (!id) return;
       const response = await fetch(`https://grocerserver.herokuapp.com/users/${id}`);
       const result = await response.json();
-
     })();
   }, []);
 

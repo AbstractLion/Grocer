@@ -24,7 +24,7 @@ export default function GroceryListSummaryScreen({navigation, route}) {
   useEffect(() => {
     navigation.dangerouslyGetParent()?.setOptions({
       headerLeft: () => <GoBackIcon navigation={navigation}/>,
-      title: groceryList.author
+      title: `${groceryList.user.firstName} ${groceryList.user.lastName}`
     });
   }, []);
 

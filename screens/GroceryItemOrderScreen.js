@@ -58,6 +58,15 @@ export default function GroceryItemScreen({navigation, route}) {
       <View style={styles.buttonView}>
         <View style={{flexDirection:'row'}}>
           <Button
+            title="Cancel"
+            titleStyle={styles.buttonTextStyle}
+            buttonStyle={styles.buttonStyle}
+            containerStyle={[styles.buttonContainer, {marginLeft: 5}]}
+            onPress={() => {
+              navigation.pop();
+            }}
+          />
+          <Button
             title={"Add to Cart"}
             titleStyle={styles.buttonTextStyle}
             buttonStyle={styles.buttonStyle}
@@ -77,15 +86,6 @@ export default function GroceryItemScreen({navigation, route}) {
                 };
                 setGroceryList({...groceryList, [route.params._id]: newItem});
               }
-              navigation.pop();
-            }}
-          />
-          <Button
-            title="Cancel"
-            titleStyle={styles.buttonTextStyle}
-            buttonStyle={styles.buttonStyle}
-            containerStyle={[styles.buttonContainer, {marginLeft: 5}]}
-            onPress={() => {
               navigation.pop();
             }}
           />
