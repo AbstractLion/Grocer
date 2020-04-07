@@ -73,7 +73,7 @@ function RoleSelectionScreen() {
       />
       <View style={{flex: -1, alignItems: 'center'}}>
         <Text style={{fontWeight: 'bold'}}>Current Role:</Text>
-        <Text>{user ? "Shopper/Requestor" : "Worker"}</Text>
+        <Text>{user.role === 'Worker' ? "Worker" : "Shopper/Requestor"}</Text>
       </View>
     </View>
   );

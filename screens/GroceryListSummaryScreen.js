@@ -32,6 +32,7 @@ export default function GroceryListSummaryScreen({navigation, route}) {
   for (let [key, value] of Object.entries(groceryList.items)) {
     let obj = value;
     obj._id = key;
+    obj.count = groceryList.itemCounts[key];
     orderedItems.push(obj);
   }
 
