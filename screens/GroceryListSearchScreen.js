@@ -55,7 +55,8 @@ function GroceryListSearch({navigation}) {
         ListEmptyComponent={
           <View style={{flex: 1, alignItems: 'center'}}>
             <Text style={{margin: 20}}>
-              Sorry, this store doesn't have any active grocery lists.
+              {refreshing ? "Loading..." : "Sorry, this store doesn't have" +
+                " any active grocery lists."}
             </Text>
           </View>
         }

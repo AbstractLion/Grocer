@@ -11,7 +11,7 @@ export default function GroceryListSummaryScreen({navigation, route}) {
   const {user} = useContext(UserContext);
 
   function handleNotification(notification) {
-    console.log(notification);
+    console.log("notification: ", notification);
     if (notification.data.isActivation && notification.data.userId === user._id)
       navigation.navigate('GroceryListChecklist', groceryList);
   }
@@ -28,29 +28,26 @@ export default function GroceryListSummaryScreen({navigation, route}) {
     });
   }, []);
 
-  let orderedItems = [];
-  for (let [key, value] of Object.entries(groceryList.items)) {
-    let obj = value;
-    obj._id = key;
-    obj.count = groceryList.itemCounts[key];
-    orderedItems.push(obj);
-  }
-
   return (
     <View style={{flex: 1}}>
       <FlatList
-        data={orderedItems}
-        renderItem={({item}) => (
-          <View>
-            <ListItem
-              leftAvatar={{source: {uri: item.imageUrl}}}
-              rightElement={{primaryText: item.count?.toString()}}
-              title={item.name}
-              bottomDivider={true}
-            />
-          </View>
-
-        )}
+        data={groceryList.items}
+        renderItem={({item: groceryItem}) => {
+          return (
+            <View>
+              <ListItem
+                leftAvatar={{source: {uri: groceryItem.item.imageUrl}}}
+                rightAvatar={{
+                  title: groceryItem.count.toString(),
+                  titleStyle: {color: 'black', fontWeight: 'bold'},
+                  overlayContainerStyle: {backgroundColor: 'white'}
+                }}
+                title={groceryItem.item.name}
+                bottomDivider={true}
+              />
+            </View>
+          );
+        }}
         keyExtractor={item => item._id}
       />
       <View

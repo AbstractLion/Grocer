@@ -10,7 +10,7 @@ import {SwipeRow} from 'react-native-swipe-list-view';
 import {Button} from 'react-native-elements';
 import cuid from 'cuid';
 
-function YourGroceryListScreen() {
+function YourGroceryListScreen({navigation}) {
   const {groceryList, setGroceryList} = useContext(GroceryListContext);
   const {user} = useContext(UserContext);
   const {currentStore} = useContext(CurrentStoreContext);
@@ -71,7 +71,7 @@ function YourGroceryListScreen() {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              author: user?.firstName + ' ' + user?.lastName,
+              user: user._id,
               storeId: currentStore.id,
               createdAt: Date.now(),
               qrCode: cuid(),
