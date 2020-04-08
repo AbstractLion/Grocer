@@ -22,12 +22,10 @@ function QRCodeScanner() {
     setScanned(true);
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
     // Activating the QR Code, data string in form of <userId>=<qrCode>
-    console.log("data: ", data);
     if (data.includes("=")) {
       const [userId, qrCode] = data.split('=');
       const activateUrl = 'https://grocerserver.herokuapp.com/lists/activate';
-      console.log(activateUrl);
-      const response = await fetch('https://grocerserver.herokuapp.com/lists/activate', {
+      const response = await fetch(activateUrl, {
         method: 'post',
         headers: {
           'Accept': 'application/json',
@@ -35,7 +33,6 @@ function QRCodeScanner() {
         },
         body: JSON.stringify({userId, qrCode})
       });
-      conosle.log(response);
       const result = await response.json();
       console.log(result);
     } else {
