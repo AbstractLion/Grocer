@@ -24,6 +24,7 @@ const Drawer = createDrawerNavigator();
 function DrawerContent(props) {
   const {user, setUser} = useContext(UserContext);
 
+
   return (
     <DrawerContentScrollView {...props}>
         <View style={{flex: 1, padding: 15}}>
@@ -86,15 +87,6 @@ export default function App() {
       }
       let token = await Notifications.getExpoPushTokenAsync();
       await SecureStore.setItemAsync('pushToken', token);
-    })();
-  }, []);
-
-  useEffect(() => {
-    (async() => {
-      const id = await SecureStore.getItemAsync('userId');
-      if (!id) return;
-      const response = await fetch(`https://grocerserver.herokuapp.com/users/${id}`);
-      const result = await response.json();
     })();
   }, []);
 

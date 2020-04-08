@@ -3,47 +3,63 @@ import {View, Text, FlatList, Image, StyleSheet, Alert} from 'react-native';
 import SvgQRCode from 'react-native-qrcode-svg';
 import {Button, CheckBox, ListItem, Overlay} from "react-native-elements";
 import StackWrapperScreenOptions from "../constants/StackWrapperScreenOptions";
+import {Notifications} from "expo";
 
 export default function GroceryListChecklistScreen({navigation, route}) {
   const groceryList = route.params;
-  const [groceryListItems, setGroceryListItems] = useState([]);
   const [checkedItems, setCheckedItems] = useState({});
   const [isQRCodeVisible, setQRCodeVisibility] = useState(false);
 
+  function handleNotification(notification) {
+    console.log(notification);
+    alert(`Order completed. You received ${groceryList.items.length} Grocer Point(s).`);
+    setQRCodeVisibility(false);
+    navigation.dangerouslyGetParent()?.dangerouslyGetParent()?.dangerouslyGetParent()?.setOptions(StackWrapperScreenOptions);
+    navigation.reset({
+      index: 0,
+      routes: [
+        {name: 'GroceryListSearch'}
+      ]
+    });
+  }
+
   useEffect(() => {
-    let orderedItems = [];
-    for (let [key, value] of Object.entries(groceryList.items)) {
-      let obj = value;
-      obj._id = key;
-      orderedItems.push(obj);
+    const listener = Notifications.addListener(handleNotification);
+    return () => {
+      console.log("Removed listener.");
+      listener.remove();
     }
-    setGroceryListItems(orderedItems);
   }, []);
 
   return (
     <View style={{flex: 1}}>
       <FlatList
-        data={groceryListItems}
-        renderItem={({item}) => (
-          <View>
-            <ListItem
-              leftAvatar={{source: {uri: item.imageUrl}}}
-              rightElement={<CheckBox
-                checked={checkedItems[item._id]}
-                onPress={() => {
-                  const newCheckedItems = {...checkedItems};
-                  if (checkedItems[item._id])
-                    delete newCheckedItems[item._id];
-                  else
-                    newCheckedItems[item._id] = true;
-                  setCheckedItems(newCheckedItems);
-                }}
-              />}
-              title={`${item.name} (${item.count?.toString()})`}
-              bottomDivider={true}
-            />
-          </View>
-        )}
+        data={groceryList.items}
+        renderItem={({item: groceryItem}) => {
+          const item = groceryItem.item;
+          return (
+            <View>
+              <ListItem
+                leftAvatar={{source: {uri: item.imageUrl}}}
+                rightElement={
+                    <CheckBox
+                    checked={checkedItems[item._id]}
+                    onPress={() => {
+                      const newCheckedItems = {...checkedItems};
+                      if (checkedItems[item._id])
+                        delete newCheckedItems[item._id];
+                      else
+                        newCheckedItems[item._id] = true;
+                      setCheckedItems(newCheckedItems);
+                    }}
+                    />
+                }
+                title={`${item.name} (${groceryItem.count?.toString()})`}
+                bottomDivider={true}
+              />
+            </View>
+          );
+        }}
         keyExtractor={item => item._id}
       />
       <View
@@ -86,9 +102,23 @@ export default function GroceryListChecklistScreen({navigation, route}) {
         <Button
           containerStyle={[styles.buttonContainer, {marginLeft: 5}]}
           title="Complete"
-          disabled={Object.keys(checkedItems).length !== groceryListItems.length}
           onPress={() => {
-            setQRCodeVisibility(true);
+            if (Object.keys(checkedItems).length !== groceryList.items.length) {
+              Alert.alert(
+                "Are you sure?",
+                "It looks like you haven't checked all the items off the" +
+                " grocery list. If certain items are out of stock, make sure" +
+                " to let the workers know!",
+                [
+                  {text: "Finish", onPress: () => {
+                    setQRCodeVisibility(true);
+                  }},
+                  {text: "Nevermind"}
+                ]
+              );
+            } else {
+              setQRCodeVisibility(true);
+            }
           }}
         >
           Complete

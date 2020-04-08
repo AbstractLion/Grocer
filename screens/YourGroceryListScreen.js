@@ -79,8 +79,10 @@ function YourGroceryListScreen({navigation}) {
             }),
           });
           setLoading(false);
+          const result = await response.json();
           if (response.status === 400) {
             alert("Something went wrong while trying to process your order");
+            console.log(result);
             return;
           }
           setGroceryList({});

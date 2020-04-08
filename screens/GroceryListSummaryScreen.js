@@ -12,13 +12,17 @@ export default function GroceryListSummaryScreen({navigation, route}) {
 
   function handleNotification(notification) {
     console.log("notification: ", notification);
-    if (notification.data.isActivation && notification.data.userId === user._id)
+    console.log(user._id);
+    if (notification.data?.isActivation && notification.data?.userId === user._id)
       navigation.navigate('GroceryListChecklist', groceryList);
   }
 
   useEffect(() => {
     const listener = Notifications.addListener(handleNotification);
-    return () => listener.remove();
+    return () => {
+      console.log("Removed listener.");
+      listener.remove();
+    }
   }, []);
 
   useEffect(() => {

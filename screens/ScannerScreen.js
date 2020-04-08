@@ -40,6 +40,10 @@ function QRCodeScanner() {
       const completeUrl = 'https://grocerserver.herokuapp.com/lists/complete';
       const response = await fetch(completeUrl, {
         method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({qrCode: data}),
       });
       const result = await response.json();

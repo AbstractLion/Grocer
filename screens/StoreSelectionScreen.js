@@ -1,28 +1,18 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {View, Dimensions, StyleSheet} from 'react-native';
 import MapView from 'react-native-maps';
 import StoreMarker from "../components/StoreMarker";
 
-const storeLocations = [
-  {
-    name: "Walmart Toronto Downsview",
-    coords: {
-      latitude: 43.7577199,
-      longitude: -79.491159,
-    },
-    id: 0
-  },
-  {
-    name: "Metro Warden Ave",
-    coords: {
-      latitude: 43.797456,
-      longitude: -79.3200992,
-    },
-    id: 1
-  },
-];
-
 export default function StoreSelectionScreen() {
+  const [storeLocations, setStoreLocations] = useState([]);
+  useEffect(() => {
+    (async() => {
+      const response = await fetch('https://grocerserver.herokuapp.com/stores');
+      const result = await response.json();
+      setStoreLocations(result);
+    })();
+  }, []);
+
   return (
   <View>
     <MapView

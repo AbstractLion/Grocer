@@ -7,11 +7,13 @@ import GroceryListChecklistScreen from "./GroceryListChecklistScreen";
 import {createStackNavigator} from "@react-navigation/stack";
 import dateFormat from 'dateformat';
 import UserContext from "../contexts/User";
+import CurrentStoreContext from "../../client/contexts/CurrentStore";
 
 function GroceryListSearch({navigation}) {
   const [groceryLists, updateGroceryLists] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const {user} = useContext(UserContext);
+  const {currentStore} = useContext(CurrentStoreContext);
 
   useEffect(() => {
     (async() => {
@@ -20,7 +22,7 @@ function GroceryListSearch({navigation}) {
   }, []);
 
   async function updateData() {
-    const listsUrl = 'https://grocerserver.herokuapp.com/lists';
+    const listsUrl = `https://grocerserver.herokuapp.com/lists?storeId=${currentStore.id}`;
     setRefreshing(true);
     const response = await fetch(listsUrl);
     const result = await response.json();
